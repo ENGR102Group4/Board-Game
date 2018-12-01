@@ -99,7 +99,7 @@ import pygame
 from pygame.locals import *
 
 
-def init_game():
+def init_game(icon1, icon2):
     """
 
     Sets initial values of the board and piece positions
@@ -109,52 +109,59 @@ def init_game():
     pygame.init()
     width, height = int((1601*.7)), int((700*.7))
     screen = pygame.display.set_mode((width, height))
-    background = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\BoardLayout.png')
-    reddot = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\reddot.png')
-    bluedot = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\bluedot.png')
+    background = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Board.png')
     board = pygame.transform.scale(background, [width,height])
-    reddot = pygame.transform.scale(reddot, [40,40])
-    bluedot = pygame.transform.scale(bluedot, [40, 40])
     screen.fill(0)
     screen.blit(board, [0, 0])
-    screen.blit(reddot, board_position[1])
-    screen.blit(bluedot,board_position[0])
+    Same_Spot(icon1, icon2, board_position[0])
+    icon1 = pygame.transform.scale(icon1, [40,40])
+    icon2 = pygame.transform.scale(icon2, [40, 40])
     pygame.display.flip()
-    input()
-    return screen, width, height
 
-
-def movement(index_initial, yell_leader, yellleader2, position_yell2):
+def movement(index_initial, yell_leader, final_pos, yellleader2, position_yell2):
     """
     Purpose: To display piece movement
     :param index_initial: The initial board pieces
     :param yell_leader: The first position piece
+    :param final_pos: The next_location
     :param yellleader2: The second position piece
     :param position_yell2: The location of second piece
-    :return: Final position of first yell leader
     """
-    background = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\BoardLayout.png')
-    final_pos = index_initial
+    background = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Board.png')
     width, height = int((1601 * .7)), int((700 * .7))
     board = pygame.transform.scale(background, [width, height])
     screen = pygame.display.set_mode((width, height))
     board_position = board_positions()[0]
-    next_space = color_num_converter()[0]
-    index = int(index_initial) + next_space
-    final_pos =index
-    screen.blit(yellleader2, board_position[position_yell2])
-    for value in range(next_space):
-        screen.blit(board)
-        screen.blit(yell_leader, board_position[index_initial+value])
-        pygame.display.flip()
-    if index > 72:
-        back = index - 72
-        final_pos = index_initial - back
+    next_space = final_pos - index_initial
+    if index_initial > 73:
+        back = final_pos - 72
         for value in range(back):
             screen.blit(board)
             screen.blit(yell_leader, board_position[index_initial-back])
             pygame.display.flip()
-    return final_pos
+    else:
+        for value in range(next_space+1):
+            screen.blit(board, [0, 0])
+            screen.blit(yellleader2, board_position[position_yell2])
+            screen.blit(yell_leader, board_position[index_initial + value])
+            pygame.display.flip()
+        end_turn = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\End_turn.png')
+        end_turn = pygame.transform.scale(end_turn, [150,80])
+        arrow_highlight = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Arrowhighlight.png')
+        arrow_highlight = pygame.transform.scale(arrow_highlight, [160, 90])
+        fin_turn = True
+        while fin_turn is True:
+            screen.blit(end_turn, [850, 350])
+            screen.blit(arrow_highlight, [-300, 400])
+            pygame.display.flip()
+            mouseposition = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if mouseposition[0] > 840 and mouseposition[0] < 1000 and mouseposition[1] > 340 and mouseposition[1] < 440:
+                    screen.blit(arrow_highlight, [845, 345])
+                    pygame.display.flip()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if mouseposition[0] > 840 and mouseposition[0] < 1000 and mouseposition[1] > 340 and mouseposition[1] < 440:
+                        fin_turn = False # Exits screen
 def rule_screen():
     """
     Code for the rule screen, they click to move to the next screen width
@@ -173,24 +180,24 @@ def rule_screen():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if mouse_position[0] > 800 and mouse_position[0] < 950 and mouse_position[1] > 400 and mouse_position[1] < 480:
-                    init_game() #Based on where the user clicks the mouse, the rule screen will proceed to the first menu screen
+                    menu1() #Based on where the user clicks the mouse, the rule screen will proceed to the first menu screen
                     enter = True
 #rule_screen()
 def Same_Spot(yellleader1, yellleader2, position):
     """
     parameters: The game pieces, and board position
+    :param position is an integer
     If both land on the same spot adjusts size so both are visible
     """
-    init_game()
-    yellleader1 = pygame.transform.scale(yellleader1,[20,20])  #shrinks the images
-    yellleader2 = pygame.transform.scale(yellleader2,[20,20])
+    yellleader1 = pygame.transform.scale(yellleader1,[30,30])  #shrinks the images
+    yellleader2 = pygame.transform.scale(yellleader2,[30,30])
     width, height = int((1601 * .7)), int((700 * .7))
     screen = pygame.display.set_mode((width, height))
-    background = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\BoardLayout.png')
+    background = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Board.png')
     board = pygame.transform.scale(background, [width, height])
     screen.blit(board,[0,0])
     screen.blit(yellleader1, position)
-    screen.blit(yellleader2, [(position[0]+22), position[1]]) #Changes on of the positions
+    screen.blit(yellleader2, [(position[0]+20), position[1]+20]) #Changes on of the positions
 def random_color_generator(color_list):
     """
 
@@ -202,31 +209,58 @@ def random_color_generator(color_list):
     import random as r
     color1= r.choice(color_list)
     color2 = r.choice(color_list) #using random.choose which chooses from a list 'randomly'
-    return color1, color2
-def color_num_converter(color,current_position):
+    index1 = color_list.index(color1)
+    index2 = color_list.index(color2)
+    return color1, index1
+def color_num_converter(index_color,current_position):
     """
     Pupose: Converts the card colors to the actual locations on the board that pertain to them
-    :param color: Card Color
+    :param  Index_color - Integer
     :param current_position: Position of the piece now
     :return: the final position to move to
-
     """
+    index_color = int(index_color)
+    current_position = int(current_position)
     blue = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Bluecard.png')
     pink = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Pinkcard.png')
     yellow = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yellowcard.png')
-    grey = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Greycard.png')
+    Purple = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Violet.png')
     Red = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\redcard.png')
     Green = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Greencard.png')
-    color_list_str = ['blue', 'pink', 'yellow', 'grey', 'Red', 'Green']
-    color_list = [blue, pink, yellow, grey, Red, Green]
-    index_color = color_list.index(color)
-    str_color = color_list_str[index_color]
-def comp_num_generator():
-    import random as r
-    next_move = r.randint(0,6,)
-    return next_move
-print(comp_num_generator())
-def card_choice_display():
+    color_list_str = ['pink', 'blue','yellow', 'Red','Purple' ,'Green']
+    color_list = [pink, blue, yellow, Red, Purple,Green]
+    new_card_num = index_color + 1
+    if current_position == 0:
+        final_position = new_card_num
+        return final_position, current_position
+    elif current_position < 6:
+        current_color_num = current_position
+    else:
+        current_color_num = current_position % 6
+
+    if current_color_num == new_card_num:
+        final_position = current_position + 6
+        return final_position, current_position
+    elif current_color_num - current_position == 1:
+        final_position = current_position + 1
+        return final_position, current_position
+    elif current_color_num - current_position == 2:
+        final_position = current_position + 2
+        return final_position, current_position
+    elif current_color_num - current_position == 3:
+        final_position = current_position + 3
+        return final_position, current_position
+    elif current_color_num - current_position == 4:
+        final_position = current_position + 4
+        return final_position, current_position
+    elif current_color_num - current_position == 5:
+        final_position = current_position + 5
+        return final_position, current_position
+def random_num_generator():
+    import random
+    num = random.randint(1,6)
+    return num
+def card_choice_display(player):
     """
 
     Takes in player and returns card choice
@@ -242,7 +276,7 @@ def card_choice_display():
     blue = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Bluecard.png')
     pink = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Pinkcard.png')
     yellow = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yellowcard.png')  #images to import
-    grey = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Greycard.png')
+    Purple = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Violet.png')
     Red = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\redcard.png')
     Green = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Greencard.png')
     wood = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Wood.png')
@@ -256,15 +290,17 @@ def card_choice_display():
     arrow_highlight = pygame.transform.scale(arrow_highlight, [150,90])
     card_screen.blit(wood,[0,0])
     randomcard = pygame.transform.scale(randomcard, [140,240])
-    cards = [blue, pink, yellow, grey, Red, Green]
-    player1 = pygame.transform.scale(player1_text, [150, 45])
-    player2 = pygame.transform.scale(player2_text, [150, 45])
+    cards = [pink,blue, yellow, Red, Purple ,Green]
+    if player == 'player 1':
+        player1 = pygame.transform.scale(player1_text, [150, 45])
+    else:
+        player1 = pygame.transform.scale(player2_text, [150, 45])
     cards_new = []
     for item in cards:
         item = pygame.transform.scale(item, [155,255]) #Resizes each card
         cards_new.append(item)
     card_choice = 1
-    color1 = random_color_generator(cards_new)[0]
+    color1, index1 = random_color_generator(cards_new)
     while card_choice == 1: #will keep screen up until choice is made
         card_screen.blit(randomcard, [50,75])
         card_screen.blit(color1, [250,75])
@@ -275,7 +311,7 @@ def card_choice_display():
             if event.type == pygame.MOUSEBUTTONDOWN: #if click is made
                 if mouseposition[0] > 50 and mouseposition[0] < 200 and mouseposition[1] > 75 and mouseposition[1] < 325:
                     card_choice = 0
-                    color2 = random_color_generator(cards_new)[1]
+                    color2, index2 = random_color_generator(cards_new)
                     screen = True
                     while screen is True:  #If on random card, display the random card
                         card_screen.blit(color2, [50, 75])
@@ -289,41 +325,96 @@ def card_choice_display():
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if mouseposition[0] > 450 and mouseposition[0] < 600 and mouseposition[1] > 250 and mouseposition[1] < 340:
                                     screen = False  #Exits screen
-                    return color2
+                                    return color2, index2
                 elif mouseposition[0] > 250 and mouseposition[0] < 400 and mouseposition[1] > 75 and mouseposition[1] < 325:
-                    card_choice = 0 # if on known card, just exits
-                    return color1
+                    card_choice= 0 # if on known card, just exits
+                    return color1, int(index1)
                     #Returns set card color
                 else:
                     card_choice = 1
-card_choice_display()
-def menu1():
+def computer_mode():
+    Player1_icon = player_menu1()[0]
+    Player1_icon = pygame.transform.scale(Player1_icon,[40,40])
+    computer_icon = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Computer_icon.png')
+    computer_icon = pygame.transform.scale(computer_icon,[40,40])
+    init_game(Player1_icon, computer_icon)
+    player = 'player 1'
+    position_com = 0
+    position_player = 0
+    win = 0
+    while win == 0:
+        index_color = card_choice_display(player)[1]
+        final_pos, current_pos = color_num_converter(index_color,position_player)
+        movement(current_pos, Player1_icon, final_pos, computer_icon, position_com)
+        position_player = final_pos
+        type(position_player)
+        comp_turn = random_num_generator()
+        final_pos_com = position_com + comp_turn
+        movement(position_com, computer_icon, final_pos_com, Player1_icon, position_player)
+        position_com = final_pos_com
+        if position_com == position_player:
+            Same_Spot(Player1_icon, computer_icon, position_player)
+        ##Check for win & repeat until win
+
+
+def player_menu1():
     """
-
-    Purpose: Have the user decide two player or computer mode
-    Executes the code for either
-
+    :return: Yell_leader icon and position of Yell Leader
     """
     width, height = int((1601 * .7)), int((700 * .7))
     screen = pygame.display.set_mode((width, height))
-    menu1 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\MaroonBack.png')
+    Menu_2 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\player 1 selection.png')
+    selector = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Grey_highlight.png')
+    selector = pygame.transform.scale(selector, [200, 260])
+    Menu_2 = pygame.transform.scale(Menu_2, [width, height])
+    Yell_1 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yell_1.png')
+    Yell_2 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yell_2.png')
+    Yell_3 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yell_3.png')
+    Yell_4 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yell_4.png')
+    Yell_5 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Yell_5.png')
     enter = False
+    position = [-400, 0]
     while enter is False:
-        screen.blit(menu1, [0, 0])
+        screen.blit(Menu_2, [0, 0])
         pygame.display.flip()
-        mouse_position = pygame.mouse.get_pos()
         for event in pygame.event.get():
+            mouse_position = pygame.mouse.get_pos()
+            screen.blit(selector, position)
+            pygame.display.flip()
+            if (mouse_position[0] > 20 and mouse_position[0] < 150) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                position = [20, 130]
+                pygame.display.flip()
+            elif (mouse_position[0] > 260 and mouse_position[0] < 390) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                position = [270, 130]
+                pygame.display.flip()
+            elif (mouse_position[0] > 500 and mouse_position[0] < 620) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                position = [490, 130]
+                pygame.display.flip()
+            elif (mouse_position[0] > 730 and mouse_position[0] < 860) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                position = [710, 130]
+                pygame.display.flip()
+            elif (mouse_position[0] > 930 and mouse_position[0] < 1100) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                position = [930, 130]
+                pygame.display.flip()
+            else:
+                position = [-400, 100]
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if (mouse_position[0] > 600 and mouse_position[0] < 1000) and (mouse_position[1] > 300 and mouse_position[1] < 400):
-                    #Computer()
-                    enter = True
-                elif (mouse_position[0] > 200 and mouse_position[0] < 500) and (mouse_position[1] > 200 and mouse_position[1] < 299):
-                    #Two_player()
-                    enter = True
-                else:
-                    enter = False
-def computer_mode(yellleader1, yellleader2):
-    init_game()
+                if (mouse_position[0] > 20 and mouse_position[0] < 150) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                    return Yell_1, position
+                elif (mouse_position[0] > 260 and mouse_position[0] < 390) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                    return Yell_2, position
+                elif (mouse_position[0] > 500 and mouse_position[0] < 620) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                    return Yell_3, position
+                elif (mouse_position[0] > 730 and mouse_position[0] < 860) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                    return Yell_4, position
+                elif (mouse_position[0] > 930 and mouse_position[0] < 1100) and (mouse_position[1] > 100 and mouse_position[1] < 300):
+                    return Yell_5, position
+#def computer_mode():
+ #   Player1_icon = player_menu1()[0]
+  #  Player1_icon = pygame.transform.scale(Player1_icon,[40,40])
+   # computer_icon = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Computer_icon.png')
+    #computer_icon = pygame.transform.scale(computer_icon,[40,40])
+    #init_game(Player1_icon, computer_icon)
     #position_com = 0
     #posiiton_player = 0
     #win = 0
@@ -340,6 +431,7 @@ def computer_mode(yellleader1, yellleader2):
             #display comp win screen
             #pygame.quit()
         # def computer_mode():
+
 #def two_player(yellleader1, yellleader2):
     #init_game()
     #position_player1 = 0
@@ -359,3 +451,44 @@ def computer_mode(yellleader1, yellleader2):
             # if win_check() = 1
             # display player2 win scree
             # pygame.quit()
+def menu1():
+    """
+
+    Purpose: Have the user decide two player or computer mode
+    Executes the code for either
+
+    """
+    width, height = int((1601 * .7)), int((700 * .7))
+    screen = pygame.display.set_mode((width, height))
+    menu1 = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\who will play.png')
+    menu1 = pygame.transform.scale(menu1, [width, height])
+    selector = pygame.image.load('C:\\Users\\kayla\\Documents\\ENGR 102\\Final- Board Game\\Grey_highlight.png')
+    selector = pygame.transform.scale(selector, [350,350])
+    enter = False
+    position = [-400, 0]
+    while enter is False:
+        screen.blit(menu1, [0, 0])
+        pygame.display.flip()
+        for event in pygame.event.get():
+            mouse_position = pygame.mouse.get_pos()
+            screen.blit(selector, position)
+            pygame.display.flip()
+            if (mouse_position[0] > 100 and mouse_position[0] < 350) and (mouse_position[1] > 100 and mouse_position[1] < 450):
+                position = [75, 120]
+                pygame.display.flip()
+            elif (mouse_position[0] > 700 and mouse_position[0] < 1050) and (mouse_position[1] > 100 and mouse_position[1] < 450):
+                position = [720, 120]
+                pygame.display.flip()
+            else:
+                position = [-400, 100]
+                pygame.display.flip()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if (mouse_position[0] > 700 and mouse_position[0] < 1050) and (mouse_position[1] > 100 and mouse_position[1] < 450):
+                    computer_mode()
+                    enter = True
+                elif (mouse_position[0] > 100 and mouse_position[0] < 350) and (mouse_position[1] > 100 and mouse_position[1] < 450):
+                    #Two_player()
+                    enter = True
+                else:
+                    enter = False
+#menu1()
