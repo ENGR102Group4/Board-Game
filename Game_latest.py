@@ -577,7 +577,7 @@ def computer_ai(pos, card, double):
     :param double: whether known card is double as boolean
     :return: whether to accept known card or not as boolean
     """
-    if card == 'sully':
+    if pos <= 15 and card == 'sully':
         return False
     elif pos >= 33 and card == 'ring':
         return False
@@ -592,6 +592,39 @@ def computer_ai(pos, card, double):
             return False
     else:
         return True
+
+
+def computer_ai_random():
+    """
+    This AI randomly chooses its moves.
+    :return: whether to accept "known" card as boolean
+    """
+    return rnd.choice([True, False])
+
+
+def computer_ai_dumb(pos, card, double):
+    """
+    This AI tries to lose the game by making the worst possible decisions.
+    :param pos: current position of player as integer
+    :param card: known card as string
+    :param double: whether known card is double as boolean
+    :return: whether to accept known card or not as boolean
+    """
+    if card == 'sully':
+        return True
+    elif pos >= 33 and card == 'ring':
+        return True
+    elif pos >= 52 and card == 'fish':
+        return True
+    elif pos >= 66 and card == 'quad':
+        return True
+    elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
+        return True
+    elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
+            or (card == 'yellow' and pos >= 69) or (card == 'red' and pos >= 70):
+            return True
+    else:
+        return False
 
 
 def computer_mode():
@@ -628,6 +661,162 @@ def computer_mode():
         p2_card, p2_double = color_card()  # same for computer except excludes choice display
         p2_card = color_position(p2_card)
         if not computer_ai(pos2_initial, p2_card, p2_double):
+            p2_card, p2_double = color_card()
+            p2_card = color_position(p2_card)
+        pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
+        movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
+        pos2_initial = pos2_final
+        count += 1
+        computer_icon = pygame.image.load('Computer_icon.png')
+        computer_icon = pygame.transform.scale(computer_icon, [40, 40])
+        if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
+            winner = True
+    if pos_initial == 71:  # for player1
+        pygame.init()
+        width, height = 1120, 490
+        player_wins = pygame.image.load('Player1_winner.png')
+        player_wins = pygame.transform.scale(player_wins, [width, height])
+        icon = pygame.transform.scale(player1_icon1, [200, 200])
+        still = 0
+        while still == 0:
+            end_screen = pygame.display.set_mode((width, height))
+            end_screen.blit(player_wins, [0, 0])
+            end_screen.blit(icon, [200, 200])
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
+                    pygame.quit()
+                    exit(0)
+    else:  # for computer winning
+        pygame.init()
+        width, height = 1120, 490
+        computer_wins = pygame.image.load('Computer_winner.png')
+        computer_wins = pygame.transform.scale(computer_wins, [width, height])
+        icon = pygame.transform.scale(computer_icon, [200, 200])
+        still = 0
+        while still == 0:
+            end_screen = pygame.display.set_mode((width, height))
+            end_screen.blit(computer_wins, [0, 0])
+            end_screen.blit(icon, [200, 200])
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit(0)
+
+
+def computer_mode_random():
+    """
+    Executes the game code by combining fundamental functions
+    :return: nothing
+    """
+    player1_icon1 = player_menu2()[0]
+    player1_icon = pygame.transform.scale(player1_icon1, [40, 40])
+    computer_icon = pygame.image.load('Computer_icon.png')
+    computer_icon = pygame.transform.scale(computer_icon, [40, 40])
+    computer_arrow = pygame.image.load('Computer_arrow.png')
+    player1_arrow = pygame.image.load('Player1arrow.png')
+    init_game(player1_icon, computer_icon)
+    pos_initial = 0
+    pos2_initial = 0
+    winner = False
+    count = 0
+    while not winner:
+        p1_card1, p1_double1 = color_card()  # choose the card and the chance of it being double
+        p1_card2, p1_double2 = color_card()
+        p1_card1 = color_position(p1_card1)  # gives the card position
+        p1_card2 = color_position(p1_card2)
+        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]  # lets user choose the card
+        if p1_card_fin == p1_card1:
+            p1_double = p1_double1
+        else:
+            p1_double = p1_double2
+        pos_final = card_to_space(pos_initial, p1_card_fin, p1_double)
+        movement(pos_initial, player1_icon, pos_final, computer_icon, pos2_initial, computer_arrow)  # moves the piece
+        pos_initial = pos_final  # changes coordinates
+        if pos_initial == 71:  # ends game play
+            break
+        p2_card, p2_double = color_card()  # same for computer except excludes choice display
+        p2_card = color_position(p2_card)
+        if not computer_ai_random():
+            p2_card, p2_double = color_card()
+            p2_card = color_position(p2_card)
+        pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
+        movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
+        pos2_initial = pos2_final
+        count += 1
+        computer_icon = pygame.image.load('Computer_icon.png')
+        computer_icon = pygame.transform.scale(computer_icon, [40, 40])
+        if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
+            winner = True
+    if pos_initial == 71:  # for player1
+        pygame.init()
+        width, height = 1120, 490
+        player_wins = pygame.image.load('Player1_winner.png')
+        player_wins = pygame.transform.scale(player_wins, [width, height])
+        icon = pygame.transform.scale(player1_icon1, [200, 200])
+        still = 0
+        while still == 0:
+            end_screen = pygame.display.set_mode((width, height))
+            end_screen.blit(player_wins, [0, 0])
+            end_screen.blit(icon, [200, 200])
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
+                    pygame.quit()
+                    exit(0)
+    else:  # for computer winning
+        pygame.init()
+        width, height = 1120, 490
+        computer_wins = pygame.image.load('Computer_winner.png')
+        computer_wins = pygame.transform.scale(computer_wins, [width, height])
+        icon = pygame.transform.scale(computer_icon, [200, 200])
+        still = 0
+        while still == 0:
+            end_screen = pygame.display.set_mode((width, height))
+            end_screen.blit(computer_wins, [0, 0])
+            end_screen.blit(icon, [200, 200])
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit(0)
+
+
+def computer_mode_dumb():
+    """
+    Executes the game code by combining fundamental functions
+    :return: nothing
+    """
+    player1_icon1 = player_menu2()[0]
+    player1_icon = pygame.transform.scale(player1_icon1, [40, 40])
+    computer_icon = pygame.image.load('Computer_icon.png')
+    computer_icon = pygame.transform.scale(computer_icon, [40, 40])
+    computer_arrow = pygame.image.load('Computer_arrow.png')
+    player1_arrow = pygame.image.load('Player1arrow.png')
+    init_game(player1_icon, computer_icon)
+    pos_initial = 0
+    pos2_initial = 0
+    winner = False
+    count = 0
+    while not winner:
+        p1_card1, p1_double1 = color_card()  # choose the card and the chance of it being double
+        p1_card2, p1_double2 = color_card()
+        p1_card1 = color_position(p1_card1)  # gives the card position
+        p1_card2 = color_position(p1_card2)
+        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]  # lets user choose the card
+        if p1_card_fin == p1_card1:
+            p1_double = p1_double1
+        else:
+            p1_double = p1_double2
+        pos_final = card_to_space(pos_initial, p1_card_fin, p1_double)
+        movement(pos_initial, player1_icon, pos_final, computer_icon, pos2_initial, computer_arrow)  # moves the piece
+        pos_initial = pos_final  # changes coordinates
+        if pos_initial == 71:  # ends game play
+            break
+        p2_card, p2_double = color_card()  # same for computer except excludes choice display
+        p2_card = color_position(p2_card)
+        if not computer_ai_dumb(pos2_initial, p2_card, p2_double):
             p2_card, p2_double = color_card()
             p2_card = color_position(p2_card)
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
