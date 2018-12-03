@@ -407,8 +407,6 @@ def card_choice_display(card1, double1, card2, double2, player):
     random_card = pygame.image.load('Randomcard.png')
     end_turn = pygame.image.load('End_turn.png')
     end_turn = pygame.transform.scale(end_turn, [150, 90])
-    card_highlight = pygame.image.load('Card_highlight.png')
-    card_highlight = pygame.transform.scale(card_highlight, [155, 255])  # TODO: figure out what this is supposed to do
     arrow_highlight = pygame.image.load('Arrowhighlight.png')
     arrow_highlight = pygame.transform.scale(arrow_highlight, [150, 90])
     sully = pygame.image.load('Sully.png')
@@ -563,6 +561,14 @@ def player_menu3(position_grey):
 
 
 def computer_ai(pos, card, double):
+    """
+    Purpose - Computer AI that determines the best move for the computer to make given the random option and the known card
+    :param pos: Integer
+    :param card: String
+    :param double: Boolean
+    :return: Boolean
+
+    """
     if card == 'sully':
         print('AI rejected', card)
         return False
@@ -923,5 +929,6 @@ def welcome():
             if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
                 pygame.quit()
                 exit(0)
+
 
 welcome()
