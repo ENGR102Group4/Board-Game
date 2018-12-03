@@ -4,7 +4,7 @@ import random as rnd
 
 def board_positions():
     """
-    The purpose of this file is to establish the positions on the game board
+    establishes the positions on the game board
     """
     # creating a simple list would be shorter, but copying and pasting for loops was easier
     space_x = []
@@ -100,6 +100,11 @@ def board_positions():
 
 
 def color_position(pos):
+    """
+    Gives the correct color/identity of a square
+    :param pos: Position of player as integer
+    :return: Name of position as string
+    """
     if pos > 0 and pos != 15 and pos != 34 and pos != 52 and pos != 67 and pos < 71:
         if (pos - 1) % 6 == 0:
             return 'pink'
@@ -130,6 +135,10 @@ def color_position(pos):
 
 
 def color_card():
+    """
+    Draws a card
+    :return: Card color as an integer and whether it is double
+    """
     card_num = int(71 * rnd.random())
     while card_num == 0:
         card_num = int(71 * rnd.random())
@@ -141,6 +150,13 @@ def color_card():
 
 
 def card_to_space(pos, card, double):
+    """
+    gives new space from original space and card
+    :param pos: initial position of player as int
+    :param card: drawn card as string
+    :param double: whether drawn card is double
+    :return: new position as integer
+    """
     color_starting = color_position(pos)
     newpos = pos + 0
     if color_starting == 'start':
@@ -151,7 +167,6 @@ def card_to_space(pos, card, double):
         color_starting = 'pink'
     elif color_starting == 'century' or color_starting == 'fish':
         color_starting = 'red'
-
     if card == 'sully':
         newpos = 15
     elif card == 'century':
@@ -160,7 +175,6 @@ def card_to_space(pos, card, double):
         newpos = 52
     elif card == 'quad':
         newpos = 67
-
     elif color_starting == 'pink' and pos <= 71:
         if card == 'pink':
             newpos = pos + 6
@@ -174,7 +188,6 @@ def card_to_space(pos, card, double):
             newpos = pos + 4
         elif card == 'green':
             newpos = pos + 5
-
     elif color_starting == 'blue' and pos <= 71:
         if card == 'pink':
             newpos = pos + 5
@@ -188,7 +201,6 @@ def card_to_space(pos, card, double):
             newpos = pos + 3
         if card == 'green':
             newpos = pos + 4
-
     elif color_starting == 'yellow' and pos <= 71:
         if card == 'pink':
             newpos = pos + 4
@@ -202,7 +214,6 @@ def card_to_space(pos, card, double):
             newpos = pos + 2
         if card == 'green':
             newpos = pos + 3
-
     elif color_starting == 'red' and pos <= 71:
         if card == 'pink':
             newpos = pos + 3
@@ -216,7 +227,6 @@ def card_to_space(pos, card, double):
             newpos = pos + 1
         if card == 'green':
             newpos = pos + 2
-
     elif color_starting == 'purple' and pos <= 71:
         if card == 'pink':
             newpos = pos + 2
@@ -230,7 +240,6 @@ def card_to_space(pos, card, double):
             newpos = pos + 6
         if card == 'green':
             newpos = pos + 1
-
     elif color_starting == ('green' or 'start') and pos <= 71:
         if card == 'pink':
             newpos = pos + 1
@@ -320,10 +329,9 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
 
 def same_spot(yell_leader1, yell_leader2, position):
     """
-    parameters: The game pieces, and board position
-    :param yell_leader1: The first position piece
-    :param yell_leader2: The second position piece
-    :param position is a integer
+    :param yell_leader1: The first position piece as an image
+    :param yell_leader2: The second position piece as an image
+    :param position as a integer
     If both land on the same spot, adjusts size so both are visible
     """
     print(type(position))
@@ -381,6 +389,8 @@ def init_game(icon1, icon2):
             if event.type == pygame.QUIT:  # allows to quit gracefully
                 pygame.quit()
                 exit(0)
+
+
 def card_choice_display(card1, double1, card2, double2, player):
     """
     Screen in which user chooses between a known card and an unknown card
@@ -562,12 +572,11 @@ def player_menu3(position_grey):
 
 def computer_ai(pos, card, double):
     """
-    Purpose - Computer AI that determines the best move for the computer to make given the random option and the known card
-    :param pos: Integer
-    :param card: String
-    :param double: Boolean
-    :return: Boolean
-
+    Computer AI that determines the best move for the computer to make given the random option and known card
+    :param pos: current position of player as integer
+    :param card: known card as string
+    :param double: whether known card is double as boolean
+    :return: whether to accept known card or not as boolean
     """
     if card == 'sully':
         print('AI rejected', card)
