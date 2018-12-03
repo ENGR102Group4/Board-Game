@@ -541,30 +541,35 @@ def player_menu3(position_grey):
                     position2 = [20, 130]
                     if position2 == position_grey:
                         position_w = [200, 500]  # if position is the same as player 1, gives warning
+                        pygame.display.flip()
                     else:
                         return yell_1
                 elif 260 < mouse_pos[0] < 390 and 100 < mouse_pos[1] < 400:
                     position2 = [270, 130]
                     if position2 == position_grey:
                         position_w = [200, 500]
+                        pygame.display.flip()
                     else:
                         return yell_2
                 elif 500 < mouse_pos[0] < 620 and 100 < mouse_pos[1] < 400:
                     position2 = [490, 130]
                     if position2 == position_grey:
                         position_w = [200, 500]
+                        pygame.display.flip()
                     else:
                         return yell_3
                 elif 730 < mouse_pos[0] < 860 and 100 < mouse_pos[1] < 400:
                     position2 = [710, 130]
                     if position2 == position_grey:
                         position_w = [200, 500]
+                        pygame.display.flip()
                     else:
                         return yell_4
                 elif 930 < mouse_pos[0] < 1100 and 100 < mouse_pos[1] < 400:
                     position2 = [930, 130]
                     if position2 == position_grey:
                         position_w = [200, 500]
+                        pygame.display.flip()
                     else:
                         return yell_5
             if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
