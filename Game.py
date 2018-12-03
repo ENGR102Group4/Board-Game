@@ -198,20 +198,169 @@ def Same_Spot(yellleader1, yellleader2, position):
     screen.blit(board,[0,0])
     screen.blit(yellleader1, position)
     screen.blit(yellleader2, [(position[0]+20), position[1]+20]) #Changes on of the positions
-def random_color_generator(color_list):
+
+def color_card(): #Kenneth
+    """
+    Purpose: To randomly Choose the card color
+    :return:Card number
+    """
+    import random as rnd
+    card_num = int(71 * rnd.random())
+    while card_num == 0:
+        card_num = int(71 * rnd.random())
+    if card_num != 15 and card_num != 34 and card_num != 52 and card_num != 67:
+        double = rnd.choice([True] + [False] * 2)
+    else:
+        double = False
+    return card_num, double
+
+def color_position(pos): #Kenneth
     """
 
-    :param color_list: The list of colors, preferably in order
-    :return: Two Color Cards
-    Purpose: To 'randomly' obtain two color card to be used for when player chooses between cards
-
+    :param pos: Position of the image - integer
+    :return: Color/Space
     """
-    import random as r
-    color1= r.choice(color_list)
-    color2 = r.choice(color_list) #using random.choose which chooses from a list 'randomly'
-    index1 = color_list.index(color1)
-    index2 = color_list.index(color2)
-    return color1, index1
+    if pos > 0 and pos != 15 and pos != 34 and pos != 52 and pos != 67 and pos < 71:
+        if (pos - 1) % 6 == 0:
+            return "pink"
+        elif (pos - 2) % 6 == 0:
+            return "blue"
+        elif (pos - 3) % 6 == 0:
+            return "yellow"
+        elif (pos - 4) % 6 == 0:
+            return "red"
+        elif (pos - 5) % 6 == 0:
+            return "purple"
+        elif (pos - 6) % 6 == 0:
+            return "green"
+    elif pos == 0:
+        return "start"
+    elif pos == 15:
+        return "sully"
+    elif pos == 34:
+        return "century"
+    elif pos == 52:
+        return "fish"
+    elif pos == 67:
+        return "quad"
+    elif pos >= 71:
+        return "kyle"
+    else:
+        return "error"
+
+def card_to_space(pos, card, double): #Kenneth
+    """
+
+    :param pos: Position as an integer
+    :param card: Color of the card/ space as a string
+    :param double: Boolean
+    :return:  The positions the card should move too
+    """
+    color_starting = color_position(pos)
+    if color_starting == "start":
+        color_starting = "green"
+    elif color_starting == "sully":
+        color_starting = "yellow"
+    elif color_starting == "quad":
+        color_starting = "pink"
+    elif color_starting == "century" or color_starting == "fish":
+        color_starting = "red"
+    if card == "sully":
+        newpos = 15
+    elif card == "century":
+        newpos = 34
+    elif card == "fish":
+        newpos = 52
+    elif card == "quad":
+        newpos = 67
+    elif color_starting == "pink" and pos <= 71:
+        if card == "pink":
+            newpos = pos + 6
+        elif card == "blue":
+            newpos = pos + 1
+        elif card == "yellow":
+            newpos = pos + 2
+        elif card == "red":
+            newpos = pos + 3
+        elif card == "purple":
+            newpos = pos + 4
+        elif card == "green":
+            newpos = pos + 5
+    elif color_starting == "blue" and pos <= 71:
+        if card == "pink":
+            newpos = pos + 5
+        if card == "blue":
+            newpos = pos + 6
+        if card == "yellow":
+            newpos = pos + 1
+        if card == "red":
+            newpos = pos + 2
+        if card == "purple":
+            newpos = pos + 3
+        if card == "green":
+            newpos = pos + 4
+    elif color_starting == "yellow" and pos <= 71:
+        if card == "pink":
+            newpos = pos + 4
+        if card == "blue":
+            newpos = pos + 5
+        if card == "yellow":
+            newpos = pos + 6
+        if card == "red":
+            newpos = pos + 1
+        if card == "purple":
+            newpos = pos + 2
+        if card == "green":
+            newpos = pos + 3
+    elif color_starting == "red" and pos <= 71:
+        if card == "pink":
+            newpos = pos + 3
+        if card == "blue":
+            newpos = pos + 4
+        if card == "yellow":
+            newpos = pos + 5
+        if card == "red":
+            newpos = pos + 6
+        if card == "purple":
+            newpos = pos + 1
+        if card == "green":
+            newpos = pos + 2
+    elif color_starting == "purple" and pos <= 71:
+        if card == "pink":
+            newpos = pos + 2
+        if card == "blue":
+            newpos = pos + 3
+        if card == "yellow":
+            newpos = pos + 4
+        if card == "red":
+            newpos = pos + 5
+        if card == "purple":
+            newpos = pos + 6
+        if card == "green":
+            newpos = pos + 1
+    elif color_starting == "green" and pos <= 71:
+        if card == "pink":
+            newpos = pos + 1
+        if card == "blue":
+            newpos = pos + 2
+        if card == "yellow":
+            newpos = pos + 3
+        if card == "red":
+            newpos = pos + 4
+        if card == "purple":
+            newpos = pos + 5
+        if card == "green":
+            newpos = pos + 6
+    try:
+        if double:
+            newpos += 6
+        if newpos > 71:
+            return pos
+        else:
+            return newpos
+    except UnboundLocalError:
+        return pos
+
 def color_num_converter(index_color,current_position):
     """
     Pupose: Converts the card colors to the actual locations on the board that pertain to them
