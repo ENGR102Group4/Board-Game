@@ -275,6 +275,8 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
     :param position_yell2: The location of second piece
     :param arrow directs the user to the next players move
     """
+    if final_pos == 71:
+        arrow = pygame.image.load('Finish_arrow.png')
     background = pygame.image.load('Board.png')
     width, height = 1120, 490  # changing size so fits better on screen
     board = pygame.transform.scale(background, [width, height])  # transform.scale changes the size of an image
@@ -982,6 +984,8 @@ def computer_dificulty_menu():
             if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
                 pygame.quit()
                 exit(0)
+
+
 def player_menu2():
     """
     Purpose: Allows player 1 to choose their position piece
