@@ -397,7 +397,7 @@ def card_choice_display(card1, double1, card2, double2, player):
     random_card = pygame.transform.scale(random_card, [140, 240])
     cards = [pink, blue, yellow, red, purple, green, sully, tree, fish_pond, quad]  # list of possible cards
     names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # strings to match the cards
-    if player == 'player 1':  # displays which player's turn
+    if player == 'player1':  # displays which player's turn
         player1 = pygame.transform.scale(player1_text, [150, 45])
     else:
         player1 = pygame.transform.scale(player2_text, [150, 45])
@@ -576,7 +576,7 @@ def computer_mode():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)  # gives the card position
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'Player1')[0]  # lets user choose the card
+        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]  # lets user choose the card
         if p1_card_fin == p1_card1:
             p1_double = p1_double1
         else:
@@ -661,7 +661,7 @@ def two_player():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player 1')[0]
+        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]
         if p1_card_fin == p1_card1:
             p1_double = p1_double1
         else:
