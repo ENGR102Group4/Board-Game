@@ -322,9 +322,9 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
             if event.type == pygame.MOUSEBUTTONDOWN:  # only if the mouse button is pressed down
                 if 840 < mouse_pos[0] < 1000 and 340 < mouse_pos[1] < 440:
                     fin_turn = False  # exits screen
-            if event.type == pygame.QUIT:  # allows to quit gracefully
-                pygame.quit()
-                exit(0)
+        if event.type == pygame.QUIT:  # allows to quit gracefully
+            pygame.quit()
+            exit(0)
 
 
 def same_spot(yell_leader1, yell_leader2, position):
