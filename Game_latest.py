@@ -1,3 +1,4 @@
+
 import pygame
 import random as rnd
 
@@ -594,14 +595,6 @@ def computer_ai(pos, card, double):
         return True
 
 
-def computer_ai_random():
-    """
-    This AI randomly chooses its moves.
-    :return: whether to accept "known" card as boolean
-    """
-    return rnd.choice([True, False])
-
-
 def computer_ai_dumb(pos, card, double):
     """
     This AI tries to lose the game by making the worst possible decisions.
@@ -942,7 +935,53 @@ def two_player():
                     pygame.quit()
                     exit(0)
 
-
+def computer_dificulty_menu():
+    """
+        Purpose: Have the user decide two player or computer mode
+        Executes the code for either
+        """
+    width, height = 1120, 490
+    screen = pygame.display.set_mode((width, height))
+    menu1_image = pygame.image.load('Computer difficulty.png')
+    menu1_image = pygame.transform.scale(menu1_image, [width, height])
+    selector = pygame.image.load('Grey_highlight.png')
+    selector = pygame.transform.scale(selector, [350, 350])
+    enter = False
+    position = [-400, 0]
+    while not enter:
+        screen.blit(menu1_image, [0, 0])
+        pygame.display.flip()
+        for event in pygame.event.get():
+            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(selector, position)
+            pygame.display.flip()
+            if 100 < mouse_pos[0] < 350 and 100 < mouse_pos[1] < 450:
+                position = [75, 120]
+                pygame.display.flip()
+            elif 700 < mouse_pos[0] < 1050 and 100 < mouse_pos[1] < 450:
+                position = [720, 120]
+                pygame.display.flip()
+            elif 400 < mouse_pos[0] < 650 and 100 < mouse_pos[1] < 450:
+                position = [400, 120]
+                pygame.display.flip()
+            else:
+                position = [-400, 100]
+                pygame.display.flip()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if 800 < mouse_pos[0] < 1050 and 100 < mouse_pos[1] < 450:
+                    computer_mode()
+                    enter = True
+                elif 100 < mouse_pos[0] < 350 and 100 < mouse_pos[1] < 450:
+                    computer_mode_dumb()
+                    enter = True
+                elif 400 < mouse_pos[0] < 650 and 100 < mouse_pos[1] < 450:
+                    computer_mode_random()
+                    enter = True
+                else:
+                    enter = False
+            if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
+                pygame.quit()
+                exit(0)
 def player_menu2():
     """
     Purpose: Allows player 1 to choose their position piece
@@ -1032,7 +1071,7 @@ def menu1():
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 700 < mouse_pos[0] < 1050 and 100 < mouse_pos[1] < 450:
-                    computer_mode()
+                    computer_dificulty_menu()
                     enter = True
                 elif 100 < mouse_pos[0] < 350 and 100 < mouse_pos[1] < 450:
                     two_player()
