@@ -282,7 +282,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
             if final_pos == position_yell2:
                 same_spot(yell_leader, yell_leader2, final_pos)  # a function run it the two images are on the same game piece
     elif next_space < 0:  # for backward progress
-        for value in range(-next_space):
+        for value in range(-next_space + 1):
             screen.blit(board, [0, 0])
             screen.blit(yell_leader2, board_position[position_yell2])
             screen.blit(yell_leader, board_position[index_initial - value])
@@ -577,10 +577,10 @@ def computer_mode():
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
+        count += 1
         if pos_initial == 71 or pos2_initial == 71:  # ends game play
             break
         print('After drawing a', p2_card, 'card, Player 2 position is', pos2_initial, color_position(pos2_initial))
-        count += 1
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
         if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
