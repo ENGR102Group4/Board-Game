@@ -1090,6 +1090,7 @@ def rules():
     width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     rules_img = pygame.image.load('How to play.png')
+    rules_img = pygame.transform.scale(rules_img, [width,height])
     menu_arrow = pygame.image.load('Menu Arrow.png')
     menu_arrow = pygame.transform.scale(menu_arrow, [150, 85])
     arrow_highlight = pygame.image.load('Arrowhighlight.png')
