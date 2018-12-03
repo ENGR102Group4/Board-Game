@@ -536,20 +536,24 @@ def player_menu3(position_grey):
 
 def computer_ai(pos, card, double):
     if card == 'sully':
-        print('AI rejected', card, double)
+        print('AI rejected', card)
         return False
     elif pos >= 33 and card == 'ring':
-        print('AI rejected', card, double)
+        print('AI rejected', card)
         return False
     elif pos >= 52 and card == 'fish':
-        print('AI rejected', card, double)
+        print('AI rejected', card)
         return False
     elif pos >= 66 and card == 'quad':
-        print('AI rejected', card, double)
+        print('AI rejected', card)
         return False
     elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
         print('AI rejected', card, double)
         return False
+    elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
+            or (card == 'yellow' and pos >= 69) or (card == 'red' and pos >= 70):
+            print('AI rejected', card, double)
+            return False
     else:
         print('AI was satisfied with', card, double)
         return True
