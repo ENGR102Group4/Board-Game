@@ -363,7 +363,7 @@ def init_game(icon1, icon2):
     pygame.display.flip()
 
 
-def card_choice_display(card1, card2, player):
+def card_choice_display(card1, double1, card2, double2, player):
     """
 
     :param card1: The known card to choose from
@@ -395,6 +395,7 @@ def card_choice_display(card1, card2, player):
     tree = pygame.image.load('tree.png')
     fish_pond = pygame.image.load('Fishpond.png')
     quad = pygame.image.load('Quad.png')
+    double = pygame.image.load('double.png')
     card_screen.blit(wood, [0, 0])
     random_card = pygame.transform.scale(random_card, [140, 240])
     cards = [pink, blue, yellow, red, purple, green, sully, tree, fish_pond, quad]  # list of possible cards
@@ -407,12 +408,14 @@ def card_choice_display(card1, card2, player):
     for item in cards:
         item = pygame.transform.scale(item, [155, 255])  # resizes each card
         cards_new.append(item)
-    card_choice = 1
+    card_choice = False
     ind1 = names.index(card1)
     card1_image = cards_new[ind1]
-    while card_choice == 1:  # will keep screen up until choice is made
+    while not card_choice:
         card_screen.blit(random_card, [50, 75])
         card_screen.blit(card1_image, [250, 75])
+        if double1:
+            card_screen.blit(double, [325, 90])
         card_screen.blit(player1, [10, 40])  # identifies player on screen
         pygame.display.flip()
         mouse_pos = pygame.mouse.get_pos()
@@ -422,13 +425,15 @@ def card_choice_display(card1, card2, player):
                 exit(0)
             if event.type == pygame.MOUSEBUTTONDOWN:  # if click is made
                 if 50 < mouse_pos[0] < 200 and 75 < mouse_pos[1] < 325:
-                    card_choice = 0
+                    card_choice = True
                     ind2 = names.index(card2)
                     card2_image = cards_new[ind2]
                     screen = True
                     highlight_position = [-300, 400]
                     while screen is True:  # if on random card, display the random card
                         card_screen.blit(card2_image, [50, 75])
+                        if double2:
+                            card_screen.blit(double, [130, 90])
                         card_screen.blit(player1, [10, 40])
                         card_screen.blit(end_turn, [425, 250])
                         pygame.display.flip()
@@ -447,10 +452,10 @@ def card_choice_display(card1, card2, player):
                                     screen = False  # exits screen
                                     return card2, ind2
                 elif 250 < mouse_pos[0] < 400 and 75 < mouse_pos[1] < 325:
-                    card_choice = 0  # if on known card, just exits
+                    card_choice = True  # if on known card, just exits
                     return card1, ind1  # returns set card color
                 else:
-                    card_choice = 1
+                    card_choice = False
 
 
 def player_menu3(position_grey):
@@ -558,7 +563,7 @@ def computer_mode():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)  # gives the card position
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_card2, 'Player1')[0]  # lets user choose the card
+        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'Player1')[0]  # lets user choose the card
         if p1_card_fin == p1_card1:
             p1_double = p1_double1
         else:
@@ -639,7 +644,7 @@ def two_player():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_card2, 'player 1')[0]
+        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player 1')[0]
         if p1_card_fin == p1_card1:
             p1_double = p1_double1
         else:
@@ -654,7 +659,7 @@ def two_player():
         p2_card2, p2_double2 = color_card()
         p2_card1 = color_position(p2_card1)
         p2_card2 = color_position(p2_card2)
-        p2_card_fin = card_choice_display(p2_card1, p2_card2, 'player2')[0]
+        p2_card_fin = card_choice_display(p2_card1, p2_double1, p2_card2, p2_double2, 'player2')[0]
         if p2_card_fin == p2_card1:
             p2_double = p2_double1
         else:
