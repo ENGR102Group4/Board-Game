@@ -738,7 +738,7 @@ def computer_mode_random():
             break
         p2_card, p2_double = color_card()  # same for computer except excludes choice display
         p2_card = color_position(p2_card)
-        if not computer_ai_random():
+        if not rnd.choice([True, False]):
             p2_card, p2_double = color_card()
             p2_card = color_position(p2_card)
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
