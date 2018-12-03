@@ -244,8 +244,6 @@ def card_to_space(pos, card, double):
             newpos = pos + 5
         if card == 'green':
             newpos = pos + 6
-    print(pos)
-    print(newpos)
     try:
         if double:
             newpos += 6
@@ -268,7 +266,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
     :param arrow directs the user to the next players move
     """
     background = pygame.image.load('Board.png')
-    width, height = int((1601 * .7)), int((700 * .7))  # changing size so fits better on screen
+    width, height = 1120, 490  # changing size so fits better on screen
     board = pygame.transform.scale(background, [width, height])  # transform.scale changes the size of an image
     screen = pygame.display.set_mode((width, height))
     board_position = board_positions()[0]
@@ -332,7 +330,7 @@ def same_spot(yell_leader1, yell_leader2, position):
     yell_leader1 = pygame.transform.scale(yell_leader1, [30, 30])  # shrinks the images
     yell_leader2 = pygame.transform.scale(yell_leader2, [30, 30])
     board_position = board_positions()[0]
-    width, height = int((1601 * .7)), int((700 * .7))
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     background = pygame.image.load('Board.png')
     board = pygame.transform.scale(background, [width, height])
@@ -349,30 +347,29 @@ def init_game(icon1, icon2):
     :param icon2  is the png image of player 2
     :return: nothing
     """
-    board_position, keys = board_positions()
     pygame.init()
-    width, height = int((1601*.7)), int((700*.7))
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     background = pygame.image.load('Board.png')
     board = pygame.transform.scale(background, [width, height])
     screen.fill(0)
     screen.blit(board, [0, 0])
     same_spot(icon1, icon2, 0)
-    icon1 = pygame.transform.scale(icon1, [40, 40])
-    icon2 = pygame.transform.scale(icon2, [40, 40])
     pygame.display.flip()
 
 
 def card_choice_display(card1, double1, card2, double2, player):
     """
-
+    Screen in which user chooses between a known card and an unknown card
     :param card1: The known card to choose from
+    :param double1: whether the first card is a doubled card
     :param card2: The unknown card to choose from
+    :param double2: whether the second card is a doubled card
     :param player: the players turn in order to display it
     :return: set card color
     """
     pygame.init()
-    width, height = int((1601 * .4)), int((700 * .5))  # smaller screen
+    width, height = 640, 350  # smaller screen
     card_screen = pygame.display.set_mode((width, height))
     player1_text = pygame.image.load('Player1_words.png')
     player2_text = pygame.image.load('Player2_words.png')
@@ -388,7 +385,7 @@ def card_choice_display(card1, double1, card2, double2, player):
     end_turn = pygame.image.load('End_turn.png')
     end_turn = pygame.transform.scale(end_turn, [150, 90])
     card_highlight = pygame.image.load('Card_highlight.png')
-    card_highlight = pygame.transform.scale(card_highlight, [155, 255])
+    card_highlight = pygame.transform.scale(card_highlight, [155, 255])  # TODO: figure out what this is supposed to do
     arrow_highlight = pygame.image.load('Arrowhighlight.png')
     arrow_highlight = pygame.transform.scale(arrow_highlight, [150, 90])
     sully = pygame.image.load('Sully.png')
@@ -399,7 +396,7 @@ def card_choice_display(card1, double1, card2, double2, player):
     card_screen.blit(wood, [0, 0])
     random_card = pygame.transform.scale(random_card, [140, 240])
     cards = [pink, blue, yellow, red, purple, green, sully, tree, fish_pond, quad]  # list of possible cards
-    names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # list as strings to be able to identify them
+    names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # strings to match the cards
     if player == 'player 1':  # displays which player's turn
         player1 = pygame.transform.scale(player1_text, [150, 45])
     else:
@@ -425,7 +422,6 @@ def card_choice_display(card1, double1, card2, double2, player):
                 exit(0)
             if event.type == pygame.MOUSEBUTTONDOWN:  # if click is made
                 if 50 < mouse_pos[0] < 200 and 75 < mouse_pos[1] < 325:
-                    card_choice = True
                     ind2 = names.index(card2)
                     card2_image = cards_new[ind2]
                     screen = True
@@ -449,13 +445,9 @@ def card_choice_display(card1, double1, card2, double2, player):
                                 pygame.display.flip()
                             if event2.type == pygame.MOUSEBUTTONDOWN:
                                 if 450 < mouse_pos[0] < 600 and 250 < mouse_pos[1] < 340:
-                                    screen = False  # exits screen
                                     return card2, ind2
                 elif 250 < mouse_pos[0] < 400 and 75 < mouse_pos[1] < 325:
-                    card_choice = True  # if on known card, just exits
                     return card1, ind1  # returns set card color
-                else:
-                    card_choice = False
 
 
 def player_menu3(position_grey):
@@ -465,7 +457,7 @@ def player_menu3(position_grey):
     :return: Yell_leader icon
 
     """
-    width, height = int((1601 * .7)), int((700 * .7))
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     menu_3 = pygame.image.load('player 2 character.png')
     selector = pygame.image.load('Grey_highlight.png')
@@ -542,6 +534,27 @@ def player_menu3(position_grey):
                         return yell_5
 
 
+def computer_ai(pos, card, double):
+    if card == 'sully':
+        print('AI rejected', card, double)
+        return False
+    elif pos >= 33 and card == 'ring':
+        print('AI rejected', card, double)
+        return False
+    elif pos >= 52 and card == 'fish':
+        print('AI rejected', card, double)
+        return False
+    elif pos >= 66 and card == 'quad':
+        print('AI rejected', card, double)
+        return False
+    elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
+        print('AI rejected', card, double)
+        return False
+    else:
+        print('AI was satisfied with', card, double)
+        return True
+
+
 def computer_mode():
     """
     Executes the game code by combining fundamental functions
@@ -574,13 +587,17 @@ def computer_mode():
         print('After drawing a', p1_card_fin, 'card, Player 1 position is', pos_initial, color_position(pos_initial))
         p2_card, p2_double = color_card()  # same for computer except excludes choice display
         p2_card = color_position(p2_card)
+        if not computer_ai(pos2_initial, p2_card, p2_double):
+            p2_card, p2_double = color_card()
+            p2_card = color_position(p2_card)
+            print('AI drew', p2_card, p2_double)
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
         count += 1
         if pos_initial == 71 or pos2_initial == 71:  # ends game play
             break
-        print('After drawing a', p2_card, 'card, Player 2 position is', pos2_initial, color_position(pos2_initial))
+        print('After drawing a', p2_card, 'card, Computer position is', pos2_initial, color_position(pos2_initial))
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
         if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
@@ -588,7 +605,7 @@ def computer_mode():
     if pos_initial == 71:  # for player1
         print('The player wins! The game ended in', count, 'turns.')
         pygame.init()
-        width, height = int((1601 * .7)), int((700 * .7))
+        width, height = 1120, 490
         player_wins = pygame.image.load('Player1_winner.png')
         player_wins = pygame.transform.scale(player_wins, [width, height])
         icon = pygame.transform.scale(player1_icon1, [200, 200])
@@ -605,7 +622,7 @@ def computer_mode():
     else:  # for computer winning
         pygame.init()
         print('The computer wins! The game ended in', count, 'turns.')
-        width, height = int((1601 * .7)), int((700 * .7))
+        width, height = 1120, 490
         computer_wins = pygame.image.load('Computer_winner.png')
         computer_wins = pygame.transform.scale(computer_wins, [width, height])
         icon = pygame.transform.scale(computer_icon, [200, 200])
@@ -674,7 +691,7 @@ def two_player():
     if pos1_initial == 71:  # displays screen if winner was player 1
         print('Player 1 wins! The game ended in', count, 'turns.')
         pygame.init()
-        width, height = int((1601 * .7)), int((700 * .7))
+        width, height = 1120, 490
         player_wins = pygame.image.load('Player1_winner.png')
         player_wins = pygame.transform.scale(player_wins, [width, height])
         icon = pygame.transform.scale(player_icon1, [200, 200])
@@ -691,7 +708,7 @@ def two_player():
     else:  # displays win screen if winner was player 2
         pygame.init()
         print('Player 2 wins!, The game ended in', count, 'turns.')
-        width, height = int((1601 * .7)), int((700 * .7))
+        width, height = 1120, 490
         player2_wins = pygame.image.load('Player2_winner.png')
         player2_wins = pygame.transform.scale(player2_wins, [width, height])
         icon = pygame.transform.scale(player2_icon1, [200, 200])
@@ -712,7 +729,7 @@ def player_menu2():
     Purpose: Allows player 1 to choose their position piece
     :return: Yell_leader icon and position of Yell Leader
     """
-    width, height = int((1601 * .7)), int((700 * .7))
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     menu_2 = pygame.image.load('player 1 selection.png')  # background image for menu
     selector = pygame.image.load('Grey_highlight.png')
@@ -768,7 +785,7 @@ def menu1():
     Executes the code for either
 
     """
-    width, height = int((1601 * .7)), int((700 * .7))
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     menu1_image = pygame.image.load('who will play.png')
     menu1_image = pygame.transform.scale(menu1_image, [width, height])
@@ -807,7 +824,7 @@ def rules():
     """
     Code for the rule screen, they click to move to the next screen width
     """
-    width, height = int((1601 * .7)), int((700 * .7))
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     rules_img = pygame.image.load('MaroonBack.png')
     menu_arrow = pygame.image.load('Menu Arrow.png')
@@ -829,7 +846,7 @@ def rules():
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 800 < mouse_pos[0] < 950 and 400 < mouse_pos[1] < 480:
-                    menu1()  # Based on where user clicks, the rule screen will proceed to the first menu screen
+                    menu1()  # Based on where user clicks, will proceed to the first menu screen
                     enter = True
 
 
@@ -837,7 +854,8 @@ def welcome():
     """
     Code for the rule screen, they click to move to the next screen width
     """
-    width, height = int((1601 * .7)), int((700 * .7))
+    board_positions()
+    width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     welcome_screen = pygame.image.load('Welcome.png')
     welcome_screen = pygame.transform.scale(welcome_screen, [width, height])
@@ -860,9 +878,8 @@ def welcome():
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 800 < mouse_pos[0] < 950 and 400 < mouse_pos[1] < 480:
-                    rules()  # Based on where the user clicks, will proceed to the first menu screen
+                    rules()  # Based on where user clicks, will proceed to the first menu screen
                     enter = True
 
 
-board_positions()
 welcome()
