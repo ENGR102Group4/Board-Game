@@ -322,9 +322,9 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
             if event.type == pygame.MOUSEBUTTONDOWN:  # only if the mouse button is pressed down
                 if 840 < mouse_pos[0] < 1000 and 340 < mouse_pos[1] < 440:
                     fin_turn = False  # exits screen
-        if event.type == pygame.QUIT:  # allows to quit gracefully
-            pygame.quit()
-            exit(0)
+            if event.type == pygame.QUIT:  # allows to quit gracefully
+                pygame.quit()
+                exit(0)
 
 
 def same_spot(yell_leader1, yell_leader2, position):
@@ -334,7 +334,6 @@ def same_spot(yell_leader1, yell_leader2, position):
     :param position as a integer
     If both land on the same spot, adjusts size so both are visible
     """
-    print(type(position))
     yell_leader1 = pygame.transform.scale(yell_leader1, [30, 30])  # shrinks the images
     yell_leader2 = pygame.transform.scale(yell_leader2, [30, 30])
     board_position = board_positions()[0]
@@ -565,9 +564,9 @@ def player_menu3(position_grey):
                         position_w = [200, 500]
                     else:
                         return yell_5
-                if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
-                    pygame.quit()
-                    exit(0)
+            if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
+                pygame.quit()
+                exit(0)
 
 
 def computer_ai(pos, card, double):
@@ -579,26 +578,19 @@ def computer_ai(pos, card, double):
     :return: whether to accept known card or not as boolean
     """
     if card == 'sully':
-        print('AI rejected', card)
         return False
     elif pos >= 33 and card == 'ring':
-        print('AI rejected', card)
         return False
     elif pos >= 52 and card == 'fish':
-        print('AI rejected', card)
         return False
     elif pos >= 66 and card == 'quad':
-        print('AI rejected', card)
         return False
     elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
-        print('AI rejected', card, double)
         return False
     elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
             or (card == 'yellow' and pos >= 69) or (card == 'red' and pos >= 70):
-            print('AI rejected', card, double)
             return False
     else:
-        print('AI was satisfied with', card, double)
         return True
 
 
@@ -633,24 +625,20 @@ def computer_mode():
         pos_initial = pos_final  # changes coordinates
         if pos_initial == 71:  # ends game play
             break
-        print('After drawing a', p1_card_fin, 'card, Player 1 position is', pos_initial, color_position(pos_initial))
         p2_card, p2_double = color_card()  # same for computer except excludes choice display
         p2_card = color_position(p2_card)
         if not computer_ai(pos2_initial, p2_card, p2_double):
             p2_card, p2_double = color_card()
             p2_card = color_position(p2_card)
-            print('AI drew', p2_card, p2_double)
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
         count += 1
-        print('After drawing a', p2_card, 'card, Computer position is', pos2_initial, color_position(pos2_initial))
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
         if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
             winner = True
     if pos_initial == 71:  # for player1
-        print('The player wins! The game ended in', count, 'turns.')
         pygame.init()
         width, height = 1120, 490
         player_wins = pygame.image.load('Player1_winner.png')
@@ -668,7 +656,6 @@ def computer_mode():
                     exit(0)
     else:  # for computer winning
         pygame.init()
-        print('The computer wins! The game ended in', count, 'turns.')
         width, height = 1120, 490
         computer_wins = pygame.image.load('Computer_winner.png')
         computer_wins = pygame.transform.scale(computer_wins, [width, height])
@@ -718,7 +705,6 @@ def two_player():
         pos1_initial = pos_final
         if pos1_initial == 71 or pos2_initial == 71:  # ends game play
             break
-        print('After drawing a', p1_card_fin, 'card, Player 1 position is', pos1_initial, color_position(pos1_initial))
         p2_card1, p2_double1 = color_card()
         p2_card2, p2_double2 = color_card()
         p2_card1 = color_position(p2_card1)
@@ -731,12 +717,10 @@ def two_player():
         pos2_final = card_to_space(pos2_initial, p2_card_fin, p2_double)
         movement(pos2_initial, player2_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
-        print('After drawing a', p2_card_fin, 'card, Player 2 position is', pos2_initial, color_position(pos2_initial))
         count += 1
         if pos1_initial == 71 or pos2_initial == 71:
             winner = True  # ends game play
     if pos1_initial == 71:  # displays screen if winner was player 1
-        print('Player 1 wins! The game ended in', count, 'turns.')
         pygame.init()
         width, height = 1120, 490
         player_wins = pygame.image.load('Player1_winner.png')
@@ -754,7 +738,6 @@ def two_player():
                     exit(0)
     else:  # displays win screen if winner was player 2
         pygame.init()
-        print('Player 2 wins!, The game ended in', count, 'turns.')
         width, height = 1120, 490
         player2_wins = pygame.image.load('Player2_winner.png')
         player2_wins = pygame.transform.scale(player2_wins, [width, height])
