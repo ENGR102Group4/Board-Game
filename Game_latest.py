@@ -616,6 +616,8 @@ def computer_mode():
         pos_final = card_to_space(pos_initial, p1_card_fin, p1_double)
         movement(pos_initial, player1_icon, pos_final, computer_icon, pos2_initial, computer_arrow)  # moves the piece
         pos_initial = pos_final  # changes coordinates
+        if pos_initial == 71:  # ends game play
+            break
         print('After drawing a', p1_card_fin, 'card, Player 1 position is', pos_initial, color_position(pos_initial))
         p2_card, p2_double = color_card()  # same for computer except excludes choice display
         p2_card = color_position(p2_card)
@@ -627,8 +629,6 @@ def computer_mode():
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
         count += 1
-        if pos_initial == 71 or pos2_initial == 71:  # ends game play
-            break
         print('After drawing a', p2_card, 'card, Computer position is', pos2_initial, color_position(pos2_initial))
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
