@@ -1,3 +1,14 @@
+# By submitting this assignment, all team members agree to the following:
+# “Aggies do not lie, cheat, or steal, or tolerate those who do”
+# “I have not given or received any unauthorized aid on this assignment”
+#
+# Names: Kayla Lotz
+# Kenneth Kessinger
+# Amelia Soltes
+# Luke Featherston
+# Section: 204
+# Assignment: Final Project
+# Date: 4 December 2018
 
 import pygame
 import random as rnd
@@ -942,6 +953,7 @@ def two_player():
                     pygame.quit()
                     exit(0)
 
+
 def computer_dificulty_menu():
     """
         Purpose: Have the user decide two player or computer mode
@@ -976,10 +988,10 @@ def computer_dificulty_menu():
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 800 < mouse_pos[0] < 1050 and 100 < mouse_pos[1] < 450:
-                    computer_mode()
+                    computer_mode_dumb()
                     enter = True
                 elif 100 < mouse_pos[0] < 350 and 100 < mouse_pos[1] < 450:
-                    computer_mode_dumb()
+                    computer_mode()
                     enter = True
                 elif 400 < mouse_pos[0] < 650 and 100 < mouse_pos[1] < 450:
                     computer_mode_random()
@@ -1099,7 +1111,7 @@ def rules():
     width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     rules_img = pygame.image.load('How to play.png')
-    rules_img = pygame.transform.scale(rules_img, [width,height])
+    rules_img = pygame.transform.scale(rules_img, [width, height])
     menu_arrow = pygame.image.load('Menu Arrow.png')
     menu_arrow = pygame.transform.scale(menu_arrow, [150, 85])
     arrow_highlight = pygame.image.load('Arrowhighlight.png')
