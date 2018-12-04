@@ -607,8 +607,8 @@ def computer_mode():
         player_wins = pygame.image.load('Player1_winner.png')
         player_wins = pygame.transform.scale(player_wins, [width, height])
         icon = pygame.transform.scale(player1_icon1, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(player_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -623,8 +623,8 @@ def computer_mode():
         computer_wins = pygame.image.load('Computer_winner.png')
         computer_wins = pygame.transform.scale(computer_wins, [width, height])
         icon = pygame.transform.scale(computer_icon, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(computer_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -681,8 +681,8 @@ def computer_mode_random():
         player_wins = pygame.image.load('Player1_winner.png')
         player_wins = pygame.transform.scale(player_wins, [width, height])
         icon = pygame.transform.scale(player1_icon1, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(player_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -697,8 +697,8 @@ def computer_mode_random():
         computer_wins = pygame.image.load('Computer_winner.png')
         computer_wins = pygame.transform.scale(computer_wins, [width, height])
         icon = pygame.transform.scale(computer_icon, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(computer_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -755,8 +755,8 @@ def computer_mode_dumb():
         player_wins = pygame.image.load('Player1_winner.png')
         player_wins = pygame.transform.scale(player_wins, [width, height])
         icon = pygame.transform.scale(player1_icon1, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(player_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -771,8 +771,8 @@ def computer_mode_dumb():
         computer_wins = pygame.image.load('Computer_winner.png')
         computer_wins = pygame.transform.scale(computer_wins, [width, height])
         icon = pygame.transform.scale(computer_icon, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(computer_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -829,8 +829,8 @@ def two_player():
         player_wins = pygame.image.load('Player1_winner.png')
         player_wins = pygame.transform.scale(player_wins, [width, height])
         icon = pygame.transform.scale(player_icon1, [200, 200])
-        still = 0
-        while still == 0:  # keeps screen blitted until the red x is marked
+        still = True
+        while still:  # keeps screen blitted until the red x is marked
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(player_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
@@ -845,8 +845,8 @@ def two_player():
         player2_wins = pygame.image.load('Player2_winner.png')
         player2_wins = pygame.transform.scale(player2_wins, [width, height])
         icon = pygame.transform.scale(player2_icon1, [200, 200])
-        still = 0
-        while still == 0:
+        still = True
+        while still:
             end_screen = pygame.display.set_mode((width, height))
             end_screen.blit(player2_wins, [0, 0])
             end_screen.blit(icon, [200, 200])
