@@ -421,9 +421,9 @@ def card_choice_display(card1, double1, card2, double2, player):
     player2_text = pygame.image.load('Player2_words.png')
     blue = pygame.image.load('Bluecard.png')
     pink = pygame.image.load('Pinkcard.png')
-    yellow = pygame.image.load('Yellowcard.png')  # images to import
+    yellow = pygame.image.load('yellowcard.png')  # images to import
     purple = pygame.image.load('Violet.png')
-    red = pygame.image.load('redcard.png')
+    red = pygame.image.load('Redcard.png')
     green = pygame.image.load('Greencard.png')
     wood = pygame.image.load('Wood.png')
     wood = pygame.transform.scale(wood, [width, height])  # changing size
@@ -440,7 +440,7 @@ def card_choice_display(card1, double1, card2, double2, player):
     card_screen.blit(wood, [0, 0])
     random_card = pygame.transform.scale(random_card, [140, 240])
     cards = [pink, blue, yellow, red, purple, green, sully, tree, fish_pond, quad]  # list of possible cards
-    names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # to match cards to strings
+    names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # to match cards with strings
     if player == 'player1':  # displays which player's turn
         player1 = pygame.transform.scale(player1_text, [150, 45])
     else:
