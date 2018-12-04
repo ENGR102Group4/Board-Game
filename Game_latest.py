@@ -241,9 +241,9 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
     arrow = pygame.transform.scale(arrow, [160, 80])
     arrow_highlight = pygame.image.load('Arrowhighlight.png')
     arrow_highlight = pygame.transform.scale(arrow_highlight, [160, 90])
-    fin_turn = True
+    fin_turn = False
     highlight_position = [-300, 400]
-    while fin_turn is True:  # displays screen until user clicks arrow
+    while not fin_turn:  # displays screen until user clicks arrow
         screen.blit(arrow, [852, 350])
         pygame.display.flip()
         for event in pygame.event.get():
@@ -258,7 +258,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:  # only if the mouse button is pressed down
                 if 840 < mouse_pos[0] < 1000 and 340 < mouse_pos[1] < 440:
-                    fin_turn = False  # exits screen
+                    fin_turn = True  # exits screen
             if event.type == pygame.QUIT:  # allows to quit gracefully
                 pygame.quit()
                 exit(0)
@@ -304,9 +304,9 @@ def init_game(icon1, icon2):
     arrow = pygame.transform.scale(arrow, [160, 80])
     arrow_highlight = pygame.image.load('Arrowhighlight.png')
     arrow_highlight = pygame.transform.scale(arrow_highlight, [160, 90])
-    fin_turn = True
+    fin_turn = False
     highlight_position = [-300, 400]
-    while fin_turn is True:  # displays screen until user clicks arrow
+    while not fin_turn:  # displays screen until user clicks arrow
         screen.blit(arrow, [852, 350])
         pygame.display.flip()
         for event in pygame.event.get():
@@ -321,7 +321,7 @@ def init_game(icon1, icon2):
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:  # only if the mouse button is pressed down
                 if 840 < mouse_pos[0] < 1000 and 340 < mouse_pos[1] < 440:
-                    fin_turn = False  # exits screen
+                    fin_turn = True  # exits screen
             if event.type == pygame.QUIT:  # allows to quit gracefully
                 pygame.quit()
                 exit(0)
@@ -576,7 +576,6 @@ def computer_mode():
     pos_initial = 0
     pos2_initial = 0
     winner = False
-    count = 0
     while not winner:
         p1_card1, p1_double1 = color_card()  # choose the card and the chance of it being double
         p1_card2, p1_double2 = color_card()
@@ -596,7 +595,6 @@ def computer_mode():
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
-        count += 1
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
         if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
@@ -650,7 +648,6 @@ def computer_mode_random():
     pos_initial = 0
     pos2_initial = 0
     winner = False
-    count = 0
     while not winner:
         p1_card1, p1_double1 = color_card()  # choose the card and the chance of it being double
         p1_card2, p1_double2 = color_card()
@@ -670,7 +667,6 @@ def computer_mode_random():
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
-        count += 1
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
         if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
@@ -724,7 +720,6 @@ def computer_mode_dumb():
     pos_initial = 0
     pos2_initial = 0
     winner = False
-    count = 0
     while not winner:
         p1_card1, p1_double1 = color_card()  # choose the card and the chance of it being double
         p1_card2, p1_double2 = color_card()
@@ -744,7 +739,6 @@ def computer_mode_dumb():
         pos2_final = card_to_space(pos2_initial, p2_card, p2_double)
         movement(pos2_initial, computer_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
-        count += 1
         computer_icon = pygame.image.load('Computer_icon.png')
         computer_icon = pygame.transform.scale(computer_icon, [40, 40])
         if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
@@ -800,7 +794,6 @@ def two_player():
     pos1_initial = 0
     pos2_initial = 0
     winner = False
-    count = 0
     while not winner:
         p1_card1, p1_double1 = color_card()
         p1_card2, p1_double2 = color_card()
@@ -820,7 +813,6 @@ def two_player():
         pos2_final = card_to_space(pos2_initial, p2_card_fin, p2_double)
         movement(pos2_initial, player2_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
-        count += 1
         if pos1_initial == 71 or pos2_initial == 71:
             winner = True  # ends game play
     if pos1_initial == 71:  # displays screen if winner was player 1
@@ -1069,7 +1061,6 @@ def welcome():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 800 < mouse_pos[0] < 950 and 400 < mouse_pos[1] < 480:
                     rules()  # Based on where user clicks, will proceed to the first menu screen
-                    enter = True
             if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
                 pygame.quit()
                 exit(0)
