@@ -954,7 +954,7 @@ def two_player():
                     exit(0)
 
 
-def computer_dificulty_menu():
+def computer_difficulty_menu():
     """
         Purpose: Have the user decide two player or computer mode
         Executes the code for either
@@ -1092,7 +1092,7 @@ def menu1():
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 700 < mouse_pos[0] < 1050 and 100 < mouse_pos[1] < 450:
-                    computer_dificulty_menu()
+                    computer_difficulty_menu()
                     enter = True
                 elif 100 < mouse_pos[0] < 350 and 100 < mouse_pos[1] < 450:
                     two_player()
