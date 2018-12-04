@@ -290,7 +290,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
         arrow = pygame.image.load('Finish_arrow.png')
     background = pygame.image.load('Board.png')
     width, height = 1120, 490  # changing size so fits better on screen
-    board = pygame.transform.scale(background, [width, height])  # transform.scale changes the size of an image
+    board = pygame.transform.scale(background, [width, height])  # transform.scale changes size of an image
     screen = pygame.display.set_mode((width, height))
     board_position = board_positions()[0]
     next_space = int(final_pos) - int(index_initial)  # the amount of spaces necessary to move
@@ -301,7 +301,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
             screen.blit(yell_leader, board_position[index_initial + value])
             pygame.display.flip()  # necessary for images to appear
             if final_pos == position_yell2:
-                same_spot(yell_leader, yell_leader2, final_pos)  # a function run it the two images are on the same game piece
+                same_spot(yell_leader, yell_leader2, final_pos)  # if the two players are in the same position
     elif next_space < 0:  # for backward progress
         for value in range(-next_space + 1):
             screen.blit(board, [0, 0])
@@ -324,7 +324,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
         screen.blit(arrow, [852, 350])
         pygame.display.flip()
         for event in pygame.event.get():
-            mouse_pos = pygame.mouse.get_pos()  # obtains the mouse position
+            mouse_pos = pygame.mouse.get_pos()  # obtains mouse position
             screen.blit(arrow_highlight, highlight_position)
             pygame.display.flip()
             if 840 < mouse_pos[0] < 1000 and 340 < mouse_pos[1] < 440:
@@ -440,7 +440,7 @@ def card_choice_display(card1, double1, card2, double2, player):
     card_screen.blit(wood, [0, 0])
     random_card = pygame.transform.scale(random_card, [140, 240])
     cards = [pink, blue, yellow, red, purple, green, sully, tree, fish_pond, quad]  # list of possible cards
-    names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # strings to match the cards
+    names = ['pink', 'blue', 'yellow', 'red', 'purple', 'green', 'sully', 'century', 'fish', 'quad']  # to match cards to strings
     if player == 'player1':  # displays which player's turn
         player1 = pygame.transform.scale(player1_text, [150, 45])
     else:
@@ -489,9 +489,9 @@ def card_choice_display(card1, double1, card2, double2, player):
                                 pygame.display.flip()
                             if event2.type == pygame.MOUSEBUTTONDOWN:
                                 if 450 < mouse_pos[0] < 600 and 250 < mouse_pos[1] < 340:
-                                    return card2, ind2
+                                    return card2, double2, ind2
                 elif 250 < mouse_pos[0] < 400 and 75 < mouse_pos[1] < 325:
-                    return card1, ind1  # returns set card color
+                    return card1, double1, ind1  # returns set card color
                 if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
                     pygame.quit()
                     exit(0)
@@ -659,11 +659,7 @@ def computer_mode():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)  # gives the card position
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]  # lets user choose the card
-        if p1_card_fin == p1_card1:
-            p1_double = p1_double1
-        else:
-            p1_double = p1_double2
+        p1_card_fin, p1_double, ind = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')  # lets user choose card
         pos_final = card_to_space(pos_initial, p1_card_fin, p1_double)
         movement(pos_initial, player1_icon, pos_final, computer_icon, pos2_initial, computer_arrow)  # moves the piece
         pos_initial = pos_final  # changes coordinates
@@ -737,11 +733,7 @@ def computer_mode_random():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)  # gives the card position
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]  # lets user choose the card
-        if p1_card_fin == p1_card1:
-            p1_double = p1_double1
-        else:
-            p1_double = p1_double2
+        p1_card_fin, p1_double, ind = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')  # lets user choose card
         pos_final = card_to_space(pos_initial, p1_card_fin, p1_double)
         movement(pos_initial, player1_icon, pos_final, computer_icon, pos2_initial, computer_arrow)  # moves the piece
         pos_initial = pos_final  # changes coordinates
@@ -815,11 +807,7 @@ def computer_mode_dumb():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)  # gives the card position
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]  # lets user choose the card
-        if p1_card_fin == p1_card1:
-            p1_double = p1_double1
-        else:
-            p1_double = p1_double2
+        p1_card_fin, p1_double, ind = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')  # lets user choose card
         pos_final = card_to_space(pos_initial, p1_card_fin, p1_double)
         movement(pos_initial, player1_icon, pos_final, computer_icon, pos2_initial, computer_arrow)  # moves the piece
         pos_initial = pos_final  # changes coordinates
@@ -895,11 +883,7 @@ def two_player():
         p1_card2, p1_double2 = color_card()
         p1_card1 = color_position(p1_card1)
         p1_card2 = color_position(p1_card2)
-        p1_card_fin = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')[0]
-        if p1_card_fin == p1_card1:
-            p1_double = p1_double1
-        else:
-            p1_double = p1_double2
+        p1_card_fin, p1_double, ind = card_choice_display(p1_card1, p1_double1, p1_card2, p1_double2, 'player1')
         pos_final = card_to_space(pos1_initial, p1_card_fin, p1_double)
         movement(pos1_initial, player1_icon, pos_final, player2_icon, pos2_initial, player2_arrow)
         pos1_initial = pos_final
@@ -909,11 +893,7 @@ def two_player():
         p2_card2, p2_double2 = color_card()
         p2_card1 = color_position(p2_card1)
         p2_card2 = color_position(p2_card2)
-        p2_card_fin = card_choice_display(p2_card1, p2_double1, p2_card2, p2_double2, 'player2')[0]
-        if p2_card_fin == p2_card1:
-            p2_double = p2_double1
-        else:
-            p2_double = p2_double2
+        p2_card_fin, p2_double, ind = card_choice_display(p2_card1, p2_double1, p2_card2, p2_double2, 'player2')
         pos2_final = card_to_space(pos2_initial, p2_card_fin, p2_double)
         movement(pos2_initial, player2_icon, pos2_final, player1_icon, pos_final, player1_arrow)
         pos2_initial = pos2_final
