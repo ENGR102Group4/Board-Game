@@ -1,5 +1,6 @@
 import random as rnd
-
+import matplotlib.pyplot as plt
+import statistics as stat
 
 def color_position(pos):
     """
@@ -182,6 +183,10 @@ def computer_ai(pos, card, double):
         return False
     elif pos >= 66 and card == 'quad':
         return False
+    elif double and ((pos >= 65 and card == 'purple') or (pos >= 64 and card == 'red') or (pos >= 63 and card ==
+                     'yellow') or (pos >= 62 and card == 'blue') or (pos >= 61 and card == 'blue') or (pos >= 60 and
+                     card == 'pink') or (pos >= 59 and card == 'green')):
+        return False
     elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
         return False
     elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
@@ -199,7 +204,7 @@ def computer_ai_2(pos, card, double):
     :param double: whether known card is double as boolean
     :return: whether to accept known card or not as boolean
     """
-    if card == 'sully':
+    if pos <= 15 and card == 'sully':
         return False
     elif pos >= 33 and card == 'ring':
         return False
@@ -207,17 +212,29 @@ def computer_ai_2(pos, card, double):
         return False
     elif pos >= 66 and card == 'quad':
         return False
+    elif double and ((pos >= 65 and card == 'purple') or (pos >= 64 and card == 'red') or (pos >= 63 and card ==
+                     'yellow') or (pos >= 62 and card == 'blue') or (pos >= 61 and card == 'blue') or (pos >= 60 and
+                     card == 'pink') or (pos >= 59 and card == 'green')):
+        return False
     elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
         return False
-    #elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
-    #        or (card == 'yellow' and pos >= 69) or (card == 'red' and pos >= 70):
-    #        return False
+    elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
+            or (card == 'yellow' and pos >= 69) or (card == 'red' and pos >= 70):
+            return False
     else:
         return True
 
 
 def computer_ai_random(pos, card, double):
+    """
+    Computer "AI" that returns random choices
+    :param pos: unused, kept here for convenience of switching out functions
+    :param card: unused, kept here for convenience of switching out functions
+    :param double: unused, kept here for convenience of switching out functions
+    :return: random boolean
+    """
     return rnd.choice([True, False])
+
 
 def computer_ai_dumb(pos, card, double):
     """
@@ -244,6 +261,35 @@ def computer_ai_dumb(pos, card, double):
         return False
 
 
+def computer_ai_dumb_2(pos, card, double):
+    """
+    Computer AI that determines the best move for the computer to make given the random option and known card
+    :param pos: current position of player as integer
+    :param card: known card as string
+    :param double: whether known card is double as boolean
+    :return: whether to accept known card or not as boolean
+    """
+    if pos <= 15 and card == 'sully':
+        return True
+    elif pos >= 33 and card == 'ring':
+        return True
+    elif pos >= 52 and card == 'fish':
+        return True
+    elif pos >= 66 and card == 'quad':
+        return True
+    elif double and ((pos >= 65 and card == 'purple') or (pos >= 64 and card == 'red') or (pos >= 63 and card ==
+                     'yellow') or (pos >= 62 and card == 'blue') or (pos >= 61 and card == 'blue') or (pos >= 60 and
+                     card == 'pink') or (pos >= 59 and card == 'green')):
+        return True
+    elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
+        return True
+    elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
+            or (card == 'yellow' and pos >= 69) or (card == 'red' and pos >= 70):
+            return True
+    else:
+        return False
+
+
 def computer_v_computer():
     """
     Executes the game code by combining fundamental functions
@@ -259,7 +305,7 @@ def computer_v_computer():
         while not winner:
             c1_card, c1_double = color_card()
             c1_card = color_position(c1_card)
-            if not computer_ai_random(pos_initial, c1_card, c1_double):
+            if not computer_ai(pos_initial, c1_card, c1_double):
                 c1_card, c1_double = color_card()
                 c1_card = color_position(c1_card)
             pos_final = card_to_space(pos_initial, c1_card, c1_double)
@@ -268,7 +314,7 @@ def computer_v_computer():
                 break
             c2_card, c2_double = color_card()
             c2_card = color_position(c2_card)
-            if not computer_ai_dumb(pos2_initial, c2_card, c2_double):
+            if not computer_ai_2(pos2_initial, c2_card, c2_double):
                 c2_card, c2_double = color_card()
                 c2_card = color_position(c2_card)
             pos2_final = card_to_space(pos2_initial, c2_card, c2_double)
@@ -285,4 +331,53 @@ def computer_v_computer():
     print("C2 (experimental) won", c2_wins, "times, or", c2_wins / total_games, "percent")
 
 
-computer_v_computer()
+def computer_v_computer_control():
+    """
+    Executes the game code by combining fundamental functions
+    :return: nothing
+    """
+    c1_wins = 0
+    c2_wins = 0
+    total_games = 0
+    countList = []
+    for i in range(10000000):
+        pos_initial = 0
+        pos2_initial = 0
+        count = 0
+        winner = False
+        while not winner:
+            count += 1
+            c1_card, c1_double = color_card()
+            c1_card = color_position(c1_card)
+            if not computer_ai(pos_initial, c1_card, c1_double):
+                c1_card, c1_double = color_card()
+                c1_card = color_position(c1_card)
+            pos_final = card_to_space(pos_initial, c1_card, c1_double)
+            pos_initial = pos_final
+            if pos_initial == 71:  # ends game play
+                break
+            c2_card, c2_double = color_card()
+            c2_card = color_position(c2_card)
+            if not computer_ai(pos2_initial, c2_card, c2_double):
+                c2_card, c2_double = color_card()
+                c2_card = color_position(c2_card)
+            pos2_final = card_to_space(pos2_initial, c2_card, c2_double)
+            pos2_initial = pos2_final
+            if pos_initial == 71 or pos2_initial == 71:  # if a winner exists
+                winner = True
+        if pos_initial == 71:  # for computer player 1 winning
+            c1_wins += 1
+            total_games += 1
+            countList.append(count)
+        else:  # for computer player 2 winning
+            c2_wins += 1
+            total_games += 1
+            countList.append(count)
+    print(max(countList), min(countList), sum(countList) / len(countList), stat.stdev(countList))
+    print("C1 (control) won", c1_wins, "times, or", c1_wins/total_games, "percent")
+    print("C2 (control) won", c2_wins, "times, or", c2_wins / total_games, "percent")
+    plt.hist(countList, max(countList) - min(countList))
+    plt.show()
+
+#computer_v_computer()
+computer_v_computer_control()
