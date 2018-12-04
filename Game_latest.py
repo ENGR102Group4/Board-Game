@@ -17,97 +17,24 @@ import random as rnd
 def board_positions():
     """
     establishes the positions on the game board
+    :return:
     """
-    # creating a simple list would be shorter, but copying and pasting for loops was easier
-    space_x = []
-    space_y = []
-    start1 = 19
-    for spaces in range(9):
-        y = start1 + (spaces*77)
-        space_y.append(y)
-        space_x.append(22)
-    start2x = space_x[-1]
-    start2y = space_y[-1]
-    for spaces2 in range(4):
-        space_y.append(start2y)
-        x = start2x + ((spaces2+1)*71)
-        space_x.append(x)
-    start3x = space_x[-1]
-    start3y = space_y[-1]
-    for spaces3 in range(7):
-        y = (start3y+3) - ((spaces3+1) * 75)
-        space_y.append(y)
-        space_x.append(start3x)
-    start4x = space_x[-1]
-    start4y = space_y[-1]
-    for spaces4 in range(3):
-        space_y.append(start4y)
-        x = start4x + ((spaces4+1)*72)
-        space_x.append(x)
-    start5x = space_x[-1]
-    start5y = space_y[-1]
-    for spaces5 in range(6):
-        y = start5y + ((spaces5+1)*75)
-        space_y.append(y)
-        space_x.append(start5x)
-    start6x = space_x[-1]
-    start6y = space_y[-1]
-    for spaces6 in range(3):
-        space_y.append(start6y)
-        x = start6x + ((spaces6 + 1) * 72)
-        space_x.append(x)
-    start7x = space_x[-1]
-    start7y = space_y[-1]
-    for spaces7 in range(7):
-        y = (start7y-3) - ((spaces7+1) * 75)
-        space_y.append(y)
-        space_x.append(start7x)
-    start8x = space_x[-1]
-    start8y = space_y[-1]
-    for spaces8 in range(3):
-        space_y.append(start8y)
-        x = (start8x-2) + ((spaces8 + 1) * 72)
-        space_x.append(x)
-    space_x.append(950)
-    space_y.append(110)
-    start9x = 1018
-    start9y = space_y[-1]
-    for spaces9 in range(8):
-        y = start9y + (spaces9 * 75)
-        space_y.append(y)
-        space_x.append(start9x)
-    start10x = space_x[-1]
-    start10y = space_y[-1]
-    for spaces10 in range(7):
-        space_y.append(start10y)
-        x = (start10x-2) + ((spaces10 + 1) * 71)
-        space_x.append(x)
-    start11x = space_x[-1]
-    start11y = space_y[-1]
-    for spaces11 in range(3):
-        y = (start11y+3) - ((spaces11 + 1) * 75)
-        space_y.append(y)
-        space_x.append(start11x)
-    start12x = space_x[-1]
-    start12y = space_y[-1]
-    for spaces12 in range(4):
-        space_y.append(start12y)
-        x = (start12x - 2) - ((spaces12 + 1) * 71)
-        space_x.append(x)
-    list_x_end = [1227, 1227, 1298, 1370, 1440, 1440, 1440, 1366]  # manually appending the rest
-    list_y_end = [342, 266, 266, 266, 266, 190, 117, 117]
-    space_y += list_y_end
-    space_x += list_x_end
-    board_position = []
-    for ind in range(len(space_x)):
-        x = space_x[ind] * .7
-        y = space_y[ind] * .7
-        positionind = [x, y]
-        board_position.append(positionind)
-    keys = []
-    for number in range(len(board_position)):
-        item = str(number)
-        keys.append(item)
+    board_position = [[15.4, 13.2], [15.4, 67.2], [15.4, 121.1], [15.4, 175.0], [15.4, 228.9], [15.4, 282.8], [15.4,
+                      336.7], [15.4, 390.6], [15.4, 444.5], [65.1, 444.5], [114.8, 444.5], [164.5, 444.5], [214.2, 444.5
+                      ], [214.2, 394.1], [214.2, 341.6], [214.2, 289.1], [214.2, 236.6], [214.2, 184.1], [214.2, 131.6],
+                      [214.2, 79.1], [264.6, 79.1], [315.0, 79.1], [365.4, 79.1], [365.4, 131.6], [365.4, 184.1], [365.4
+                      , 236.6], [365.4, 289.1], [365.4, 341.6], [365.4, 394.1], [415.8, 394.1], [466.2, 394.1], [516.6,
+                      394.1], [516.6, 339.5], [516.6, 287.0], [516.6, 234.5], [516.6, 182.0], [516.6, 129.5], [516.6,
+                      77.0], [516.6, 24.5], [565.6, 24.5], [616.0, 24.5], [666.4, 24.5], [665.0, 77.0], [712.6, 77.0],
+                      [712.6, 129.5], [712.6, 182.0], [712.6, 234.5], [712.6, 287.0], [712.6, 339.5], [712.6, 392.0],
+                      [712.6, 444.5], [760.9, 444.5], [810.6, 444.5], [860.3, 444.5], [910.0, 444.5], [959.7, 444.5],
+                      [1009.4, 444.5], [1059.1, 444.5], [1059.1, 394.1], [1059.1, 341.6], [1059.1, 289.1], [1008.0,
+                      289.1], [958.3, 289.1], [908.6, 289.1], [858.9, 289.1], [858.9, 239.4], [858.9, 186.2], [908.6,
+                      186.2], [959.0, 186.2], [1008.0, 186.2], [1008.0, 133.0], [1008.0, 81.9], [956.2, 81.9]]
+    keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'
+            , '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37'
+            , '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55'
+            , '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72']
     return board_position, keys
 
 
