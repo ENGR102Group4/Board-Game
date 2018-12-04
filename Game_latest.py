@@ -16,8 +16,8 @@ import random as rnd
 
 def board_positions():
     """
-    establishes the positions on the game board
-    :return: returns a
+    Establishes the positions on the game board
+    :return: A list of coordinates for board positions
     """
     board_position = [[15.4, 13.2], [15.4, 67.2], [15.4, 121.1], [15.4, 175.0], [15.4, 228.9], [15.4, 282.8], [15.4,
                       336.7], [15.4, 390.6], [15.4, 444.5], [65.1, 444.5], [114.8, 444.5], [164.5, 444.5], [214.2, 444.5
