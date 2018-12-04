@@ -17,7 +17,7 @@ import random as rnd
 def board_positions():
     """
     establishes the positions on the game board
-    :return:
+    :return: returns a
     """
     board_position = [[15.4, 13.2], [15.4, 67.2], [15.4, 121.1], [15.4, 175.0], [15.4, 228.9], [15.4, 282.8], [15.4,
                       336.7], [15.4, 390.6], [15.4, 444.5], [65.1, 444.5], [114.8, 444.5], [164.5, 444.5], [214.2, 444.5
@@ -31,11 +31,7 @@ def board_positions():
                       [1009.4, 444.5], [1059.1, 444.5], [1059.1, 394.1], [1059.1, 341.6], [1059.1, 289.1], [1008.0,
                       289.1], [958.3, 289.1], [908.6, 289.1], [858.9, 289.1], [858.9, 239.4], [858.9, 186.2], [908.6,
                       186.2], [959.0, 186.2], [1008.0, 186.2], [1008.0, 133.0], [1008.0, 81.9], [956.2, 81.9]]
-    keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19'
-            , '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37'
-            , '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55'
-            , '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72']
-    return board_position, keys
+    return board_position
 
 
 def color_position(pos):
@@ -219,7 +215,7 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
     width, height = 1120, 490  # changing size so fits better on screen
     board = pygame.transform.scale(background, [width, height])  # transform.scale changes size of an image
     screen = pygame.display.set_mode((width, height))
-    board_position = board_positions()[0]
+    board_position = board_positions()
     next_space = int(final_pos) - int(index_initial)  # the amount of spaces necessary to move
     if next_space > 0:  # if position progress
         for value in range(next_space+1):
@@ -277,7 +273,7 @@ def same_spot(yell_leader1, yell_leader2, position):
     """
     yell_leader1 = pygame.transform.scale(yell_leader1, [30, 30])  # shrinks the images
     yell_leader2 = pygame.transform.scale(yell_leader2, [30, 30])
-    board_position = board_positions()[0]
+    board_position = board_positions()
     width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     background = pygame.image.load('Board.png')
@@ -1049,7 +1045,6 @@ def welcome():
     """
     Code for the rule screen, they click to move to the next screen width
     """
-    board_positions()
     width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
     welcome_screen = pygame.image.load('Welcome.png')
