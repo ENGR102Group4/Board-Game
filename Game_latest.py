@@ -527,6 +527,11 @@ def computer_ai(pos, card, double):
         return False
     elif pos >= 66 and card == 'quad':
         return False
+    elif double and ((pos >= 65 and card == 'purple') or (pos >= 64 and card == 'red') or
+                     (pos >= 63 and card == 'yellow') or (pos >= 62 and card == 'blue') or
+                     (pos >= 61 and card == 'blue') or (pos >= 60 and card == 'pink') or (pos >= 59 and card == 'green')
+                     ):
+        return False
     elif pos <= 60 and not double and card != 'sully' and card != 'ring' and card != 'fish' and card != 'quad':
         return False
     elif (card == 'green' and pos >= 66) or (card == 'pink' and pos >= 67) or (card == 'blue' and pos >= 68)\
