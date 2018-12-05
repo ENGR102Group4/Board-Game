@@ -1,4 +1,3 @@
-
 # By submitting this assignment, all team members agree to the following:
 # “Aggies do not lie, cheat, or steal, or tolerate those who do”
 # “I have not given or received any unauthorized aid on this assignment”
@@ -9,7 +8,7 @@
 # Luke Featherston
 # Section: 204
 # Assignment: Final Project
-# Date: 4 December 2018
+# Date: 5 December 2018
 
 import pygame
 import random as rnd
@@ -87,11 +86,11 @@ def color_card():
 
 def card_to_space(pos, card, double):
     """
-    gives new space from original space and card
-    :param pos: initial position of player as int
-    :param card: drawn card as string
-    :param double: whether drawn card is double
-    :return: new position as integer
+    Gives new space from original space and card
+    :param pos: Initial position of player as int
+    :param card: Drawn card as string
+    :param double: Whether drawn card is double
+    :return: New position as integer
     """
     color_starting = color_position(pos)
     newpos = pos + 0
@@ -203,12 +202,13 @@ def card_to_space(pos, card, double):
 def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2, arrow):
     """
     To display piece movement
-    :param index_initial: The initial board pieces
-    :param yell_leader: The first position piece
-    :param final_pos: The next_location
-    :param yell_leader2: The second position piece
-    :param position_yell2: The location of second piece
-    :param arrow directs the user to the next players move
+    :param index_initial: The initial position of the moving player's piece
+    :param yell_leader: The moving player's avatar on the board
+    :param final_pos: The final position of the moving player's piece
+    :param yell_leader2: The other player's avatar on the board
+    :param position_yell2: The location of the others player's piece
+    :param arrow: Leads to the next screen and labels it
+    :return: nothing
     """
     if final_pos == 71:
         arrow = pygame.image.load('Finish_arrow.png')
@@ -231,14 +231,12 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
             screen.blit(board, [0, 0])
             screen.blit(yell_leader2, board_position[position_yell2])
             screen.blit(yell_leader, board_position[index_initial - value])
-            pygame.display.flip()
             if final_pos == position_yell2:
                 same_spot(yell_leader, yell_leader2, final_pos)
     else:  # for no progress
         screen.blit(board, [0, 0])
         screen.blit(yell_leader2, board_position[position_yell2])
         screen.blit(yell_leader, board_position[index_initial])
-        pygame.display.flip()
         if final_pos == position_yell2:
             same_spot(yell_leader, yell_leader2, final_pos)
     arrow = pygame.transform.scale(arrow, [160, 80])
@@ -271,7 +269,7 @@ def same_spot(yell_leader1, yell_leader2, position):
     """
     :param yell_leader1: The first position piece as an image
     :param yell_leader2: The second position piece as an image
-    :param position as a integer
+    :param position: position as a integer
     If both land on the same spot, adjusts size so both are visible
     """
     yell_leader1 = pygame.transform.scale(yell_leader1, [30, 30])  # shrinks the images
@@ -426,8 +424,8 @@ def card_choice_display(card1, double1, card2, double2, player):
 def player_menu3(position_grey):
     """
     This code asks player 2 to choose a player piece different than player 1 and enforces that
-    :param position_grey: list, giving coordinates of other icon to black so it is not choosen
-    :return: Yell_leader icon
+    :param position_grey: list, giving coordinates of other icon to black so it is not chosen
+    :return: Yell_leader icon aas image
     """
     width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
@@ -966,7 +964,7 @@ def player_menu2():
 
 def menu1():
     """
-    Purpose: Have the user decide two player or computer mode
+    Purpose: Have the user decide between two player or computer mode
     Executes the code for either
     """
     width, height = 1120, 490
@@ -995,11 +993,11 @@ def menu1():
                 pygame.display.flip()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 700 < mouse_pos[0] < 1050 and 100 < mouse_pos[1] < 450:
+                    enter = True
                     computer_difficulty_menu()
-                    enter = True
                 elif 100 < mouse_pos[0] < 350 and 100 < mouse_pos[1] < 450:
-                    two_player()
                     enter = True
+                    two_player()
                 else:
                     enter = False
             if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
