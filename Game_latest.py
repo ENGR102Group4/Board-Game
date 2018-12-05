@@ -418,9 +418,9 @@ def card_choice_display(card1, double1, card2, double2, player):
                                     return card2, double2, ind2
                 elif 250 < mouse_pos[0] < 400 and 75 < mouse_pos[1] < 325:
                     return card1, double1, ind1  # returns set card color
-                if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
-                    pygame.quit()
-                    exit(0)
+            if event.type == pygame.QUIT:  # allows user to exit gracefully by hitting the red x
+                pygame.quit()
+                exit(0)
 
 
 def player_menu3(position_grey):
