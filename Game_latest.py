@@ -1,3 +1,4 @@
+
 # By submitting this assignment, all team members agree to the following:
 # “Aggies do not lie, cheat, or steal, or tolerate those who do”
 # “I have not given or received any unauthorized aid on this assignment”
@@ -230,12 +231,14 @@ def movement(index_initial, yell_leader, final_pos, yell_leader2, position_yell2
             screen.blit(board, [0, 0])
             screen.blit(yell_leader2, board_position[position_yell2])
             screen.blit(yell_leader, board_position[index_initial - value])
+            pygame.display.flip()
             if final_pos == position_yell2:
                 same_spot(yell_leader, yell_leader2, final_pos)
     else:  # for no progress
         screen.blit(board, [0, 0])
         screen.blit(yell_leader2, board_position[position_yell2])
         screen.blit(yell_leader, board_position[index_initial])
+        pygame.display.flip()
         if final_pos == position_yell2:
             same_spot(yell_leader, yell_leader2, final_pos)
     arrow = pygame.transform.scale(arrow, [160, 80])
