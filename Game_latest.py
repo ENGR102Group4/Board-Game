@@ -427,7 +427,7 @@ def player_menu3(position_grey):
     """
     This code asks player 2 to choose a player piece different than player 1 and enforces that
     :param position_grey: list, giving coordinates of other icon to black so it is not chosen
-    :return: Yell_leader icon aas image
+    :return: Yell_leader icon as image
     """
     width, height = 1120, 490
     screen = pygame.display.set_mode((width, height))
