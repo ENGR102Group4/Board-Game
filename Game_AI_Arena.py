@@ -2,6 +2,7 @@ import random as rnd
 import matplotlib.pyplot as plt
 import statistics as stat
 
+
 def color_position(pos):
     """
     Gives the correct color/identity of a square
@@ -339,8 +340,8 @@ def computer_v_computer_control():
     c1_wins = 0
     c2_wins = 0
     total_games = 0
-    countList = []
-    for i in range(10000000):
+    count_list = []
+    for i in range(10000):
         pos_initial = 0
         pos2_initial = 0
         count = 0
@@ -368,16 +369,18 @@ def computer_v_computer_control():
         if pos_initial == 71:  # for computer player 1 winning
             c1_wins += 1
             total_games += 1
-            countList.append(count)
+            count_list.append(count)
         else:  # for computer player 2 winning
             c2_wins += 1
             total_games += 1
-            countList.append(count)
-    print(max(countList), min(countList), sum(countList) / len(countList), stat.stdev(countList))
+            count_list.append(count)
+    print(max(count_list), min(count_list), sum(count_list) / len(count_list), stat.stdev(count_list))
     print("C1 (control) won", c1_wins, "times, or", c1_wins/total_games, "percent")
     print("C2 (control) won", c2_wins, "times, or", c2_wins / total_games, "percent")
-    plt.hist(countList, max(countList) - min(countList))
+    plt.hist(count_list, max(count_list) - min(count_list))
     plt.show()
 
+
 #computer_v_computer()
+
 computer_v_computer_control()
